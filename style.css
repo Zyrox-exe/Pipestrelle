@@ -15,6 +15,7 @@ body{
 .progressBar{
     border: solid 1px;
     border-radius: 4px;
+    /* color: palegreen; */
 }
 #progress{
     margin: 8px;
