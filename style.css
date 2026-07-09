@@ -7,7 +7,8 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color:rgb(30, 26, 40);
+    background-color:#120e2e;
+    color: #ffffff;
 }
 #container{
     display: flex;
@@ -16,18 +17,44 @@ body{
     justify-content: center;
     height: 50vh;
     width: 50vw;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(152, 251, 152, 0.445);
-    background-color: rgb(94, 134, 94);
+    box-shadow: 0 8px 20px rgba(255, 0, 127, 0.4);
+    background-color: #241c4f;
+    border: 12px solid #ff007f;
 }
 .status{
     width: fit-content;
+}
+button {
+    background-color: #7000ff;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid #00f0ff;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.4), inset 0 0 4px rgba(0, 240, 255, 0.2);
+}
+
+button:hover {
+    background-color: #00f0ff;
+    color: #120e2e;
+    box-shadow: 0 0 15px #00f0ff;
+    border-color: #ffffff;
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 5px #00f0ff;
 }
 .progressBar{
     border: solid 1px;
     border-radius: 4px;
     margin: 8px;
-    accent-color: palegreen;
+    accent-color: #00f0ff;
 }
 #stats{
     display: flex;
