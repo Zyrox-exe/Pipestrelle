@@ -2,6 +2,7 @@
 A cute and cozy virtual pet that lives inside your browser. Take good care of him or you might make him do something bad.
 
 # Features
+- A pet inside your browser
 - Feed pip
 - Make pip sleep
 - Play with pip

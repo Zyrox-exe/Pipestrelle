@@ -11,12 +11,12 @@ const sleepBtn = document.getElementById("sleepBtn");
 const happinessBar = document.getElementById("happinessBar");
 const playBtn = document.getElementById("playBtn");
 
-const petFace = document.getElementById("petFace");
 const energyStatus = document.getElementById("energyStatus");
 const hungerStatus = document.getElementById("hungerStatus");
 const happinessStatus = document.getElementById("happinessStatus");
 
-petFace.innerText = "🦖";
+const pet = document.querySelector(".pet");
+
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
@@ -35,37 +35,35 @@ setInterval(function() {
     energyBar.value = energy;
     happinessBar.value = happiness;
 
-    
+    let currentAnimation = "idle";
+
     if(hunger <= 30) {
-        petFace.innerText = "😩🍖";
         hungerStatus.innerText = "Hunger: Starving";
     } else if(hunger > 30 && hunger < 60){
-        petFace.innerText = "🤤🤤";
         hungerStatus.innerText = "Hunger: Wants Food";
     } else {
         hungerStatus.innerText = "Hunger: Full";
     }
 
     if(energy <= 30) {
-        petFace.innerText = "🥱😪";
+        currentAnimation = "sleep"
         energyStatus.innerText = "Energy: Tired";
     } else if(energy > 30 && energy < 60){
-        petFace.innerText = "😴";
         energyStatus.innerText = "Energy: Getting Sleepy";
     } else {
         energyStatus.innerText = "Energy: Energetic";
     }
 
     if(happiness <= 30) {
-        petFace.innerText = "😭💔";
         happinessStatus.innerText = "Lonely";
     } else if(happiness > 30 && happiness < 60){
-        petFace.innerText = "🙁";
         happinessStatus.innerText = "Happiness: Bored";
     } else {
-        happinessStatus.innerText = "Happiness: Happy!";
+        max = 100;
+        happinessStatus.innerText = "Happiness: Happy!"
     }
-
+        pet.className = `pet ${currentAnimation}`
+    
     if(hunger <= 0){
         alert("Oh no! Pip ran away to find food. Feed him better next time!!!");
         hunger = 100; energy = 100; happiness = 100; petFace.innerText = "🦖"
@@ -84,6 +82,7 @@ feedBtn.addEventListener('click', function(){
         hunger += 15;
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
+        pet.className = "pet jump"
     }
 });
 
@@ -92,6 +91,7 @@ sleepBtn.addEventListener('click', function(){
         energy += 20;
         if(energy > 100) energy = 100;
         energyBar.value = energy;
+        pet.className = "pet sleep"
     }
 });
 
@@ -100,5 +100,6 @@ playBtn.addEventListener('click', function(){
         happiness += 10;
         if(happiness > 100) happiness = 100;
         happinessBar.value = happiness;
+        pet.className = "pet happy"
     }
 });

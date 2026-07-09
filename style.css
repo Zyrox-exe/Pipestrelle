@@ -44,7 +44,11 @@ body{
     width: 64px;
     height: 64px;
     display: inline-block;
+    position: relative;
+    bottom: 7vh;
     image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    transform: scale(2);
 }
 .happy{
     background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
