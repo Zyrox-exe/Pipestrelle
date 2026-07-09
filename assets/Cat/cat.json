@@ -1,0 +1,45 @@
+{
+  "name": "Cat",
+  "theme": "Forest",
+  "frames": 8,
+  "sizes": [
+    32,
+    64
+  ],
+  "fps": {
+    "idle": 8,
+    "jump": 12,
+    "sleep": 6,
+    "happy": 10
+  },
+  "animations": [
+    "idle",
+    "jump",
+    "sleep",
+    "happy"
+  ],
+  "frameSize": {
+    "32": {
+      "w": 32,
+      "h": 32
+    },
+    "64": {
+      "w": 64,
+      "h": 64
+    }
+  },
+  "files": {
+    "32": {
+      "idle": "cat_idle_32.png",
+      "jump": "cat_jump_32.png",
+      "sleep": "cat_sleep_32.png",
+      "happy": "cat_happy_32.png"
+    },
+    "64": {
+      "idle": "cat_idle_64.png",
+      "jump": "cat_jump_64.png",
+      "sleep": "cat_sleep_64.png",
+      "happy": "cat_happy_64.png"
+    }
+  }
+}

@@ -3,25 +3,81 @@
     padding: 0;
 }
 body{
-    background-color: rgb(94, 134, 94);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:rgb(30, 26, 40);
 }
 #container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 50vh;
+    width: 50vw;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(152, 251, 152, 0.445);
+    background-color: rgb(94, 134, 94);
+}
+.status{
+    width: fit-content;
 }
 .progressBar{
     border: solid 1px;
     border-radius: 4px;
-    /* color: palegreen; */
-}
-#progress{
     margin: 8px;
+    accent-color: palegreen;
 }
-#btns{
+#stats{
     display: flex;
-    justify-content: space-around;
-    width: 38vw;
+    flex-direction: row;
+    gap: 8px;
+}
+.health{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.pet{
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    image-rendering: pixelated;
+}
+.happy{
+    background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
+    animation: play 0.8s steps(8) infinite;
+}
+@keyframes play {
+    100% {background-position: -512px;}
+}
+.happy{
+    background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
+    animation: play 0.8s steps(8) infinite;
+}
+@keyframes play {
+    100% {background-position: -512px;}
+}
+.sleep{
+    background: url("./assets/Cat/cat_sleep_64.png") no-repeat left center;
+    animation: sleep 0.8s steps(8) infinite;
+}
+@keyframes sleep {
+    100% {background-position: -512px;}
+}
+.idle{
+    background: url("./assets/Cat/cat_idle_64.png") no-repeat left center;
+    animation: idle 0.8s steps(8) infinite;
+}
+@keyframes idle {
+    100% {background-position: -512px;}
+}
+.jump{
+    background: url("./assets/Cat/cat_jump_64.png") no-repeat left center;
+    animation: jump 0.8s steps(8) infinite;
+}
+@keyframes jump {
+    100% {background-position: -512px;}
 }

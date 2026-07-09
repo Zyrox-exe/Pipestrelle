@@ -9,7 +9,7 @@ A cute and cozy virtual pet that lives inside your browser. Take good care of hi
 # Highlights
 - Made using HTML5, CSS3 and vanilla JavaScript.
 - Helps feel heard.
-- Pixelated pet(coming soon...)
+- Pixelated pet with minor animations.
 
 # Make your own
 >It is recommended to make your own version of this virtual pet as it is very fun and teaches a lot.
@@ -20,5 +20,9 @@ git clone https://github.com/Zyrox-exe/Pipestrelle.git
 2. Edit the files to add your own spices to it.
 3. Open index.html in any browser.
 4. To put it on the internet, go to github pages or Vercel and deploy it.
+
+## Credits
+Access the pixel pet animated art [here](https://labitos.itch.io/tiny-pets)
+
 ---
 <footer>Made by Mohd Sadiq Umar</footer>
