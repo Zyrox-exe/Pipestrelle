@@ -23,7 +23,14 @@ git clone https://github.com/Zyrox-exe/Pipestrelle.git
 4. To put it on the internet, go to github pages or Vercel and deploy it.
 
 ## Credits
-Access the pixel pet animated art [here](https://labitos.itch.io/tiny-pets)
+
+|Asset|Link/Credit|
+|----------|------------|
+|Pixel Art | [Itch](https://labitos.itch.io/tiny-pets)|
+|Eating Sound | [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=36186)|
+|Sleeping Sound| [Pixabay](https://pixabay.com/sound-effects/people-snoring-8486/)|
+|Play Sound| [Pixabay](https://pixabay.com/sound-effects/people-yay-6120/)|
+
 
 ---
 <footer>Made by Mohd Sadiq Umar</footer>
