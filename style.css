@@ -21,6 +21,30 @@ body{
     background-color: #241c4f;
     border: 12px solid #ff007f;
 }
+.menuContainer{
+    position: relative;
+    bottom: 6vh;
+    margin-bottom: 20px;
+    font-family:'Courier New', Courier, monospace;
+    color: #ffffff;
+    font-size: 14px;
+}
+#petSelect{
+    background-color: #120e2e;
+    color: #00f0ff;
+    border: 2px solid #ff007f;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 0, 127, 0.3);
+}
+#petSelect:focus{
+    border-color: #00f0ff;
+    box-shadow: 0 0 12px;
+}
 .status{
     width: fit-content;
 }
@@ -77,37 +101,68 @@ button:active {
     image-rendering: crisp-edges;
     transform: scale(2);
 }
-.happy{
+/* Cat */
+.cat.happy{
     background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
-@keyframes play {
-    100% {background-position: -512px;}
-}
-.happy{
-    background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
-    animation: play 0.8s steps(8) infinite;
-}
-@keyframes play {
-    100% {background-position: -512px;}
-}
-.sleep{
+.cat.sleep{
     background: url("./assets/Cat/cat_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
+}
+.cat.idle{
+    background: url("./assets/Cat/cat_idle_64.png") no-repeat left center;
+    animation: idle 0.8s steps(8) infinite;
+}
+.cat.jump{
+    background: url("./assets/Cat/cat_jump_64.png") no-repeat left center;
+    animation: jump 0.8s steps(8) infinite;
+}
+
+/* Dragon */
+.dragon.happy{
+    background: url("./assets/Dragon/dragon_happy_64.png") no-repeat left center;
+    animation: play 0.8s steps(8) infinite;
+}
+.dragon.sleep{
+    background: url("./assets/Dragon/dragon_sleep_64.png") no-repeat left center;
+    animation: sleep 0.8s steps(8) infinite;
+}
+.dragon.idle{
+    background: url("./assets/Dragon/dragon_idle_64.png") no-repeat left center;
+    animation: idle 0.8s steps(8) infinite;
+}
+.dragon.jump{
+    background: url("./assets/Dragon/dragon_jump_64.png") no-repeat left center;
+    animation: jump 0.8s steps(8) infinite;
+}
+
+/* Ghost */
+.ghost.happy{
+    background: url("./assets/Ghost/ghost_happy_64.png") no-repeat left center;
+    animation: play 0.8s steps(8) infinite;
+}
+.ghost.sleep{
+    background: url("./assets/Ghost/ghost_sleep_64.png") no-repeat left center;
+    animation: sleep 0.8s steps(8) infinite;
+}
+.ghost.idle{
+    background: url("./assets/Ghost/ghost_idle_64.png") no-repeat left center;
+    animation: idle 0.8s steps(8) infinite;
+}
+.ghost.jump{
+    background: url("./assets/Ghost/ghost_jump_64.png") no-repeat left center;
+    animation: jump 0.8s steps(8) infinite;
+}
+
+@keyframes play {
+    100% {background-position: -512px;}
 }
 @keyframes sleep {
     100% {background-position: -512px;}
 }
-.idle{
-    background: url("./assets/Cat/cat_idle_64.png") no-repeat left center;
-    animation: idle 0.8s steps(8) infinite;
-}
 @keyframes idle {
     100% {background-position: -512px;}
-}
-.jump{
-    background: url("./assets/Cat/cat_jump_64.png") no-repeat left center;
-    animation: jump 0.8s steps(8) infinite;
 }
 @keyframes jump {
     100% {background-position: -512px;}

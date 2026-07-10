@@ -17,9 +17,20 @@ const happinessStatus = document.getElementById("happinessStatus");
 
 const pet = document.querySelector(".pet");
 
+const petSelect = document.getElementById("petSelect");
+const gameContainer = document.getElementById("container");
+
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
+
+let currentPet = petSelect.value;
+
+petSelect.addEventListener("change", function(){
+    currentPet = petSelect.value;
+    let currentAnim = pet.className.split(" ")[1] || "idle";
+    pet.className = `pet ${currentPet} ${currentAnim}`;
+});
 
 // Bars
 setInterval(function() {
@@ -62,7 +73,7 @@ setInterval(function() {
         max = 100;
         happinessStatus.innerText = "Happiness: Happy!"
     }
-        pet.className = `pet ${currentAnimation}`
+        pet.className = `pet ${currentPet} ${currentAnimation}`
     
     if(hunger <= 0){
         alert("Oh no! Pip ran away to find food. Feed him better next time!!!");
@@ -82,7 +93,7 @@ feedBtn.addEventListener('click', function(){
         hunger += 15;
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
-        pet.className = "pet jump"
+        pet.className = `pet ${currentPet} jump`
     }
 });
 
@@ -91,7 +102,7 @@ sleepBtn.addEventListener('click', function(){
         energy += 20;
         if(energy > 100) energy = 100;
         energyBar.value = energy;
-        pet.className = "pet sleep"
+        pet.className = `pet ${currentPet} sleep`
     }
 });
 
@@ -100,6 +111,6 @@ playBtn.addEventListener('click', function(){
         happiness += 10;
         if(happiness > 100) happiness = 100;
         happinessBar.value = happiness;
-        pet.className = "pet happy"
+        pet.className = `pet ${currentPet} happy`
     }
 });
