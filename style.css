@@ -11,23 +11,30 @@ body{
     color: #ffffff;
 }
 #container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    width: 50vw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    height: 80vh;
+    width: 90vw;
+    max-width: 600px;
     box-shadow: 0 8px 20px rgba(255, 0, 127, 0.4);
     background-color: #241c4f;
     border: 12px solid #ff007f;
+    padding: 20px;
 }
 .menuContainer{
-    position: relative;
-    bottom: 6vh;
     margin-bottom: 20px;
     font-family:'Courier New', Courier, monospace;
     color: #ffffff;
     font-size: 14px;
+}
+.arcadeScreen{
+    background-color: #0d0921;
+    border: 2px solid #00f0ff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #petSelect{
     background-color: #120e2e;
@@ -81,8 +88,8 @@ button:active {
     accent-color: #00f0ff;
 }
 #stats{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
 }
 .health{
@@ -95,8 +102,6 @@ button:active {
     width: 64px;
     height: 64px;
     display: inline-block;
-    position: relative;
-    bottom: 7vh;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     transform: scale(2);

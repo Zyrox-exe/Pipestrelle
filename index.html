@@ -8,32 +8,36 @@
 </head>
 <body>
     <div id="container">
-        <div class="menuContainer">
-            <label >Companion: </label>
-            <select id="petSelect">
-                <option value="cat">Cat</option>
-                <option value="dragon">Dragon</option>
-                <option value="ghost">Ghost</option>
-            </select>
-        </div>
-        <div class="pet idle"></div>
-        <div id="stats">
-            <div id="hunger" class="health">
-                <div id="hungerStatus" class="status"></div>
-                <progress max="100" value="10" id="hungerBar" class="progressBar"></progress>
-                <button id="feedBtn">Feed</button>
-            </div>
-            <div id="energy" class="health">
-                <div id="energyStatus" class="status"></div>
-                <progress max="100" value="10" id="energyBar" class="progressBar"></progress>
-                <button id="sleepBtn">Sleep</button>
-            </div>
-            <div id="happiness" class="health">
-                <div id="happinessStatus" class="status"></div>
-                <progress max="100" value="10" id="happinessBar" class="progressBar"></progress>
-                <button id="playBtn">Play!</button>
+        <div >
+            <div class="menuContainer">
+                <label >Companion: </label>
+                <select id="petSelect">
+                    <option value="cat">Cat</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="ghost">Ghost</option>
+                </select>
             </div>
         </div>
+        <main class="arcadeScreen">
+                <div class="pet idle"></div>
+        </main>
+            <div id="stats">
+                <div id="hunger" class="health">
+                    <div id="hungerStatus" class="status"></div>
+                    <progress max="100" value="10" id="hungerBar" class="progressBar"></progress>
+                    <button id="feedBtn">Feed</button>
+                </div>
+                <div id="energy" class="health">
+                    <div id="energyStatus" class="status"></div>
+                    <progress max="100" value="10" id="energyBar" class="progressBar"></progress>
+                    <button id="sleepBtn">Sleep</button>
+                </div>
+                <div id="happiness" class="health">
+                    <div id="happinessStatus" class="status"></div>
+                    <progress max="100" value="10" id="happinessBar" class="progressBar"></progress>
+                    <button id="playBtn">Play!</button>
+                </div>
+            </div>
     </div>
     <script src="script.js"></script>
 </body>

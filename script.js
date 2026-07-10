@@ -77,7 +77,7 @@ setInterval(function() {
     
     if(hunger <= 0){
         alert("Oh no! Pip ran away to find food. Feed him better next time!!!");
-        hunger = 100; energy = 100; happiness = 100; petFace.innerText = "🦖"
+        hunger = 100; energy = 100; happiness = 100;
     } else if(happiness <= 0){
         alert("Pip grew bored of you, so it left for more fun things. Play with him more next time!!!");
         hunger = 100; energy = 100; happiness = 100;
