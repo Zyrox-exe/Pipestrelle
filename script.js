@@ -41,6 +41,10 @@ const feedSound = new Audio("./assets/Sound-Effects/eating.mp3");
 const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
 const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
 
+const gameOverOverlay = document.getElementById("gameOverOverlay");
+const gameOverText = document.getElementById("gameOverText");
+const rebootBtn = document.getElementById("rebootBtn");
+
 let isActing = false;
 
 hungerStatus.innerText = "Hunger: Good";
@@ -100,13 +104,16 @@ setInterval(function() {
         }
     
     if(hunger <= 0){
-        alert("Oh no! Pip ran away to find food. Feed him better next time!!!");
+        gameOverText.innerText = "SYSTEM FAILURE: Pip ran away to find food. You don't deserve to have a companion..."
+        gameOverOverlay.classList.remove("hidden");
         hunger = 100; energy = 100; happiness = 100;
     } else if(happiness <= 0){
-        alert("Pip grew bored of you, so it left for more fun things. Play with him more next time!!!");
+        gameOverText.innerText = "SYSTEM FAILURE: Pip grew bored of you, so it left for more fun things. Play with him more next time!!!";
+        gameOverOverlay.classList.remove("hidden");
         hunger = 100; energy = 100; happiness = 100;
     } else if(energy <= 0){
-        alert("Pip passed out from exhaustion! Giving him a forced nap.");
+        gameOverText.innerText = "Pip passed out from exhaustion! Giving him a forced nap.";
+        gameOverOverlay.classList.remove("hidden");
         energy = 100;
     }
 
@@ -156,3 +163,7 @@ playBtn.addEventListener('click', function(){
         pet.className = `pet ${currentPet} happy`
     }
 });
+
+rebootBtn.addEventListener('click', function(){
+    gameOverOverlay.classList.add("hidden");
+})
