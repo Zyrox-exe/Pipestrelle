@@ -84,8 +84,9 @@ button:active {
 .progressBar{
     border: solid 1px;
     border-radius: 4px;
-    margin: 8px;
+    margin-top: 8px;
     accent-color: #00f0ff;
+    width: 90%;
 }
 #stats{
     display: grid;
@@ -104,7 +105,7 @@ button:active {
     display: inline-block;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    transform: scale(2);
+    transform: scale(4);
 }
 /* Cat */
 .cat.happy{

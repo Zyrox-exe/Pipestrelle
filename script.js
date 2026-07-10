@@ -1,6 +1,23 @@
-let hunger = 100;
-let energy = 100;
-let happiness = 100;
+let hunger;
+let energy;
+let happiness;
+let currentPet;
+
+let savedData = localStorage.getItem("pip_pet_state")
+if(savedData){
+    let parsed = JSON.parse(savedData);
+    hunger = parsed.hunger;
+    energy = parsed.energy;
+    happiness = parsed.happiness;
+    currentPet = parsed.pet;
+    document.getElementById("petSelect").value = currentPet;
+} else{
+    hunger = 100;
+    energy = 100;
+    happiness = 100;
+    currentPet = "cat";
+}
+
 
 const hungerBar = document.getElementById("hungerBar");
 const feedBtn = document.getElementById("feedBtn");
@@ -24,7 +41,6 @@ hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
 
-let currentPet = petSelect.value;
 
 petSelect.addEventListener("change", function(){
     currentPet = petSelect.value;
@@ -85,6 +101,14 @@ setInterval(function() {
         alert("Pip passed out from exhaustion! Giving him a forced nap.");
         energy = 100;
     }
+
+    let gameState = {
+        hunger: hunger,
+        energy: energy,
+        happiness: happiness,
+        pet: currentPet
+    };
+    localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
 
 // Buttons
