@@ -10,7 +10,17 @@ if(savedData){
     energy = parsed.energy;
     happiness = parsed.happiness;
     currentPet = parsed.pet;
+    let aliveList = parsed.aliveList || ["bear","bunny","cat","chick","dog","dragon","fox","frog","panda","penguin","slime"];
     document.getElementById("petSelect").value = currentPet;
+
+    const selectElement = document.getElementById("petSelect");
+    Array.from(selectElement.options).forEach(option => {
+        if(!aliveList.includes(option.value)) {
+            option.remove();
+        }
+    });
+
+    selectElement.value = currentPet;
 } else{
     hunger = 100;
     energy = 100;
@@ -96,7 +106,7 @@ setInterval(function() {
     } else if(happiness > 30 && happiness < 60){
         happinessStatus.innerText = "Happiness: Bored";
     } else {
-        max = 100;
+        // max = 100;
         happinessStatus.innerText = "Happiness: Happy!"
     }
         if(!isActing){
@@ -104,9 +114,17 @@ setInterval(function() {
         }
     
     if(hunger <= 0){
-        gameOverText.innerText = "SYSTEM FAILURE: Pip ran away to find food. You don't deserve to have a companion..."
+        gameOverText.innerText = `ALAS! Your ${currentPet.toUpperCase()} has left this world because of YOU!`
         gameOverOverlay.classList.remove("hidden");
-        hunger = 100; energy = 100; happiness = 100;
+        let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
+        if (currentOption) {
+            currentOption.remove();
+        }
+        currentPet = "ghost";
+        pet.className = "pet ghost idle";
+        hunger = 100;
+        energy = 100;
+        happiness = 100;
     } else if(happiness <= 0){
         gameOverText.innerText = "SYSTEM FAILURE: Pip grew bored of you, so it left for more fun things. Play with him more next time!!!";
         gameOverOverlay.classList.remove("hidden");
@@ -116,12 +134,13 @@ setInterval(function() {
         gameOverOverlay.classList.remove("hidden");
         energy = 100;
     }
-
+    let remainingPets = Array.from(petSelect.options).map(opt => opt.value);
     let gameState = {
         hunger: hunger,
         energy: energy,
         happiness: happiness,
-        pet: currentPet
+        pet: currentPet,
+        aliveList: remainingPets
     };
     localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
@@ -166,4 +185,13 @@ playBtn.addEventListener('click', function(){
 
 rebootBtn.addEventListener('click', function(){
     gameOverOverlay.classList.add("hidden");
-})
+
+    if (petSelect.options.length > 0) {
+        currentPet = petSelect.options[0].value;
+        petSelect.value = currentPet;
+        pet.className = `pet ${currentPet} idle`
+    } else {
+        gameOverText.innerText = "SYSTEM ECLIPSE: ALL COMPANIONS TERMINATED. GRID REQUEST REQUIRED.";
+        localStorage.removeItem("pip_pet_state")
+    }
+});
