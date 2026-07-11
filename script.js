@@ -70,9 +70,15 @@ petSelect.addEventListener("change", function(){
 
 // Bars
 setInterval(function() {
-    hunger = hunger - 0.9;
-    energy = energy - 0.5;
-    happiness = happiness - 0.75;
+    if (currentPet !== "ghost") {
+        hunger = hunger - 0.9;
+        energy = energy - 0.5;
+        happiness = happiness - 0.75;
+    } else {
+        hunger = 100;
+        energy = 100;
+        happiness = 100;
+    }
 
     if (hunger < 0) hunger = 0;
     if (energy < 0) energy = 0;
