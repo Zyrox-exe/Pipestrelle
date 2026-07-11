@@ -57,6 +57,23 @@ const rebootBtn = document.getElementById("rebootBtn");
 
 let isActing = false;
 
+const playlist = [
+    "./assets/music/interpolation.mp3",
+    "./assets/music/phases.mp3",
+    "./assets/music/solar dreams.mp3",
+    "./assets/music/stardancer.mp3"
+];
+let currentSongIndex = 0;
+const bgMusic = new Audio(playlist[currentSongIndex]);
+bgMusic.volume = 0.3;
+
+function playNextSong() {
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    bgMusic.src = playlist[currentSongIndex];
+    bgMusic.play().catch(error => console.log("Audio play blocked by the browser:"+error));
+}
+bgMusic.addEventListener("ended", playNextSong)
+
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";

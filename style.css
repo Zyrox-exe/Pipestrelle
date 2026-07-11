@@ -147,217 +147,217 @@ button:active {
  
 /* Bear */
 .bear.happy{
-    background: url("./assets/Bear/bear_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bear/bear_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .bear.sleep{
-    background: url("./assets/Bear/bear_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bear/bear_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .bear.idle{
-    background: url("./assets/Bear/bear_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bear/bear_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .bear.jump{
-    background: url("./assets/Bear/bear_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bear/bear_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Bunny */
 .bunny.happy{
-    background: url("./assets/Bunny/bunny_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bunny/bunny_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .bunny.sleep{
-    background: url("./assets/Bunny/bunny_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bunny/bunny_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infiniteChick
 }
 .bunny.idle{
-    background: url("./assets/Bunny/bunny_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bunny/bunny_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .bunny.jump{
-    background: url("./assets/Bunny/bunny_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Bunny/bunny_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Cat */
 .cat.happy{
-    background: url("./assets/Cat/cat_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Cat/cat_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .cat.sleep{
-    background: url("./assets/Cat/cat_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Cat/cat_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .cat.idle{
-    background: url("./assets/Cat/cat_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Cat/cat_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .cat.jump{
-    background: url("./assets/Cat/cat_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Cat/cat_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Chick */
 .chick.happy{
-    background: url("./assets/Chick/chick_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Chick/chick_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .chick.sleep{
-    background: url("./assets/Chick/chick_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Chick/chick_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .chick.idle{
-    background: url("./assets/Chick/chick_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Chick/chick_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .chick.jump{
-    background: url("./assets/Chick/chick_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Chick/chick_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Dog */
 .dog.happy{
-    background: url("./assets/Dog/dog_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Dog/dog_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .dog.sleep{
-    background: url("./assets/Dog/dog_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Dog/dog_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .dog.idle{
-    background: url("./assets/Dog/dog_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Dog/dog_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .dog.jump{
-    background: url("./assets/Dog/dog_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Dog/dog_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
 
 /* Dragon */
 .dragon.happy{
-   background: url("./assets/Dragon/dragon_happy_64.png") no-repeat left center;
+   background: url("./assets/Pets/Dragon/dragon_happy_64.png") no-repeat left center;
    animation: play 0.8s steps(8) infinite;
 }
 .dragon.sleep{
-   background: url("./assets/Dragon/dragon_sleep_64.png") no-repeat left center;
+   background: url("./assets/Pets/Dragon/dragon_sleep_64.png") no-repeat left center;
    animation: sleep 0.8s steps(8) infinite;
 }
 .dragon.idle{
-   background: url("./assets/Dragon/dragon_idle_64.png") no-repeat left center;
+   background: url("./assets/Pets/Dragon/dragon_idle_64.png") no-repeat left center;
    animation: idle 0.8s steps(8) infinite;
 }
 .dragon.jump{
-   background: url("./assets/Dragon/dragon_jump_64.png") no-repeat left center;
+   background: url("./assets/Pets/Dragon/dragon_jump_64.png") no-repeat left center;
    animation: jump 0.8s steps(8) infinite;
 }
 
 /* Fox */
 .fox.happy{
-    background: url("./assets/Fox/fox_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Fox/fox_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .fox.sleep{
-    background: url("./assets/Fox/fox_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Fox/fox_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .fox.idle{
-    background: url("./assets/Fox/fox_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Fox/fox_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .fox.jump{
-    background: url("./assets/Fox/fox_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Fox/fox_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
 
 /* Frog */
 .frog.happy{
-    background: url("./assets/Frog/frog_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Frog/frog_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .frog.sleep{
-    background: url("./assets/Frog/frog_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Frog/frog_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .frog.idle{
-    background: url("./assets/Frog/frog_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Frog/frog_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .frog.jump{
-    background: url("./assets/Frog/frog_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Frog/frog_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Panda */
 .panda.happy{
-    background: url("./assets/Panda/panda_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Panda/panda_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .panda.sleep{
-    background: url("./assets/Panda/panda_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Panda/panda_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .panda.idle{
-    background: url("./assets/Panda/panda_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Panda/panda_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .panda.jump{
-    background: url("./assets/Panda/panda_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Panda/panda_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Penguin */
 .penguin.happy{
-    background: url("./assets/Penguin/penguin_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Penguin/penguin_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .penguin.sleep{
-    background: url("./assets/Penguin/penguin_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Penguin/penguin_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .penguin.idle{
-    background: url("./assets/Penguin/penguin_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Penguin/penguin_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .penguin.jump{
-    background: url("./assets/Penguin/penguin_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Penguin/penguin_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
  
 /* Slime */
 .slime.happy{
-    background: url("./assets/Slime/slime_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Slime/slime_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .slime.sleep{
-    background: url("./assets/Slime/slime_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Slime/slime_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .slime.idle{
-    background: url("./assets/Slime/slime_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Slime/slime_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .slime.jump{
-    background: url("./assets/Slime/slime_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Slime/slime_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
 
 /* Ghost */
 .ghost.happy{
-    background: url("./assets/Ghost/ghost_happy_64.png") no-repeat left center;
+    background: url("./assets/Pets/Ghost/ghost_happy_64.png") no-repeat left center;
     animation: play 0.8s steps(8) infinite;
 }
 .ghost.sleep{
-    background: url("./assets/Ghost/ghost_sleep_64.png") no-repeat left center;
+    background: url("./assets/Pets/Ghost/ghost_sleep_64.png") no-repeat left center;
     animation: sleep 0.8s steps(8) infinite;
 }
 .ghost.idle{
-    background: url("./assets/Ghost/ghost_idle_64.png") no-repeat left center;
+    background: url("./assets/Pets/Ghost/ghost_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
 }
 .ghost.jump{
-    background: url("./assets/Ghost/ghost_jump_64.png") no-repeat left center;
+    background: url("./assets/Pets/Ghost/ghost_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;
 }
 
