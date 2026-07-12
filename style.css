@@ -10,6 +10,23 @@ body{
     background-color:#120e2e;
     color: #ffffff;
 }
+#bootScreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0a0618;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.bootTerminal{
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00f0ff;
+}
 #container{
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -80,6 +97,29 @@ button:hover {
 button:active {
     transform: scale(0.95);
     box-shadow: 0 0 5px #00f0ff;
+}
+.disabledBtn{
+    background-color: gray;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0 0 0;
+}
+.disabledBtn:hover{
+    background-color: gray;
+    color: black;
+    box-shadow: 0 0 0;
+    border-color: black;
+}
+.disabledBtn:active{
+    transform: scale(1);
+    box-shadow: 0 0 0;
 }
 #rebootBtn{
     background-color: black;
@@ -170,12 +210,12 @@ button:active {
 }
 .bunny.sleep{
     background: url("./assets/Pets/Bunny/bunny_sleep_64.png") no-repeat left center;
-    animation: sleep 0.8s steps(8) infiniteChick
+    animation: sleep 0.8s steps(8) infinite;
 }
 .bunny.idle{
     background: url("./assets/Pets/Bunny/bunny_idle_64.png") no-repeat left center;
     animation: idle 0.8s steps(8) infinite;
-}
+}   
 .bunny.jump{
     background: url("./assets/Pets/Bunny/bunny_jump_64.png") no-repeat left center;
     animation: jump 0.8s steps(8) infinite;

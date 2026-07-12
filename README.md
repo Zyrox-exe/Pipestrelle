@@ -30,7 +30,12 @@ git clone https://github.com/Zyrox-exe/Pipestrelle.git
 |Eating Sound | [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=36186)|
 |Sleeping Sound| [Pixabay](https://pixabay.com/sound-effects/people-snoring-8486/)|
 |Play Sound| [Pixabay](https://pixabay.com/sound-effects/people-yay-6120/)|
-
+Music Credits:
+|Music Used|Artist/Link|
+|----------|-----------|
+|----------|-----------|
+|----------|-----------|
+|----------|-----------|
 
 ---
 <footer>Made by Mohd Sadiq Umar</footer>

@@ -3,7 +3,7 @@ let energy;
 let happiness;
 let currentPet;
 
-let savedData = localStorage.getItem("pip_pet_state")
+let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
     let parsed = JSON.parse(savedData);
     hunger = parsed.hunger;
@@ -55,19 +55,32 @@ const gameOverOverlay = document.getElementById("gameOverOverlay");
 const gameOverText = document.getElementById("gameOverText");
 const rebootBtn = document.getElementById("rebootBtn");
 
+const bootScreen = document.getElementById("bootScreen");
+const mainBootBtn = document.getElementById("bootBtn");
+
+mainBootBtn.addEventListener('click', function() {
+    bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
+    bootScreen.style.display = "none";
+})
+
 let isActing = false;
 
 const playlist = [
-    "./assets/music/interpolation.mp3",
-    "./assets/music/phases.mp3",
-    "./assets/music/solar dreams.mp3",
-    "./assets/music/stardancer.mp3"
+    "./assets/music/ddlc_main_theme.mp3",
+    "./assets/music/ohayou_sayori.mp3"
 ];
+const hauntedPlaylist = [
+    "./assets/music/ending_music/ohayou_sayori_glitch.mp3",
+    "./assets/music/ending_music/sayo_nara.mp3"
+];
+
+let isHaunted = false;
 let currentSongIndex = 0;
 const bgMusic = new Audio(playlist[currentSongIndex]);
 bgMusic.volume = 0.3;
 
 function playNextSong() {
+    let activeList = isHaunted ? hauntedPlaylist : playlist;
     currentSongIndex = (currentSongIndex + 1) % playlist.length;
     bgMusic.src = playlist[currentSongIndex];
     bgMusic.play().catch(error => console.log("Audio play blocked by the browser:"+error));
@@ -95,6 +108,12 @@ setInterval(function() {
         hunger = 100;
         energy = 100;
         happiness = 100;
+        feedBtn.disabled = true;
+        sleepBtn.disabled = true;
+        playBtn.disabled = true;
+        feedBtn.className = "disabledBtn";
+        sleepBtn.className = "disabledBtn";
+        playBtn.className = "disabledBtn";
     }
 
     if (hunger < 0) hunger = 0;
@@ -137,7 +156,7 @@ setInterval(function() {
         }
     
     if(hunger <= 0){
-        gameOverText.innerText = `ALAS! Your ${currentPet.toUpperCase()} has left this world because of YOU!`
+        gameOverText.innerText = `${currentPet.toUpperCase()} has left this world because of YOU....And he is NEVER coming BACK.`
         gameOverOverlay.classList.remove("hidden");
         let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
         if (currentOption) {
@@ -149,9 +168,9 @@ setInterval(function() {
         energy = 100;
         happiness = 100;
     } else if(happiness <= 0){
-        gameOverText.innerText = "SYSTEM FAILURE: Pip grew bored of you, so it left for more fun things. Play with him more next time!!!";
+        gameOverText.innerText = "Play with Pip if you want to stay with him.";
         gameOverOverlay.classList.remove("hidden");
-        hunger = 100; energy = 100; happiness = 100;
+        happiness = 20;
     } else if(energy <= 0){
         gameOverText.innerText = "Pip passed out from exhaustion! Giving him a forced nap.";
         gameOverOverlay.classList.remove("hidden");
@@ -172,11 +191,15 @@ setInterval(function() {
 feedBtn.addEventListener('click', function(){
     feedSound.currentTime = 0;
     feedSound.play();
-    if (hunger < 100){
+    if (hunger < 100 && isActing){
         hunger += 15;
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
-        pet.className = `pet ${currentPet} jump`
+        isActing = true;
+        pet.className = `pet ${currentPet} jump`;
+        setTimeout(function() {
+            isActing = false;
+        }, 1000);
     }
 });
 
@@ -214,7 +237,15 @@ rebootBtn.addEventListener('click', function(){
         petSelect.value = currentPet;
         pet.className = `pet ${currentPet} idle`
     } else {
-        gameOverText.innerText = "SYSTEM ECLIPSE: ALL COMPANIONS TERMINATED. GRID REQUEST REQUIRED.";
-        localStorage.removeItem("pip_pet_state")
+        gameOverText.innerText = "G A M E  O V E R :  N O O N E' S  L E F T.";
+        isHaunted = true;
+        currentSongIndex = 0;
+
+        bgMusic.pause();
+        bgMusic.src = hauntedPlaylist[currentSongIndex];
+        bgMusic.play().catch(e => console.log(e));
+        currentPet = "ghost";
+        pet.className = "pet ghost idle";
+        petSelect.disabled = true;
     }
 });
