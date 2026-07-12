@@ -2,6 +2,9 @@ let hunger;
 let energy;
 let happiness;
 let currentPet;
+let isHaunted = false;
+let currentSongIndex = 0;
+let isActing = false;
 
 let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
@@ -19,22 +22,24 @@ if(savedData){
             option.remove();
         }
     });
+    
+    if(aliveList.length === 0 || (currentPet === "ghost" && aliveList.length === 0)){
+        isHaunted = true;
+        selectElement.disabled = true;
+    }
 
     selectElement.value = currentPet;
-} else{
+} else {
     hunger = 100;
     energy = 100;
     happiness = 100;
     currentPet = "cat";
 }
 
-
 const hungerBar = document.getElementById("hungerBar");
 const feedBtn = document.getElementById("feedBtn");
-
 const energyBar = document.getElementById("energyBar");
 const sleepBtn = document.getElementById("sleepBtn");
-
 const happinessBar = document.getElementById("happinessBar");
 const playBtn = document.getElementById("playBtn");
 
@@ -43,13 +48,8 @@ const hungerStatus = document.getElementById("hungerStatus");
 const happinessStatus = document.getElementById("happinessStatus");
 
 const pet = document.querySelector(".pet");
-
 const petSelect = document.getElementById("petSelect");
 const gameContainer = document.getElementById("container");
-
-const feedSound = new Audio("./assets/Sound-Effects/eating.mp3");
-const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
-const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
 
 const gameOverOverlay = document.getElementById("gameOverOverlay");
 const gameOverText = document.getElementById("gameOverText");
@@ -58,12 +58,9 @@ const rebootBtn = document.getElementById("rebootBtn");
 const bootScreen = document.getElementById("bootScreen");
 const mainBootBtn = document.getElementById("bootBtn");
 
-mainBootBtn.addEventListener('click', function() {
-    bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
-    bootScreen.style.display = "none";
-})
-
-let isActing = false;
+const feedSound = new Audio("./assets/Sound-Effects/eating.mp3");
+const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
+const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
 
 const playlist = [
     "./assets/music/ddlc_main_theme.mp3",
@@ -74,23 +71,25 @@ const hauntedPlaylist = [
     "./assets/music/ending_music/sayo_nara.mp3"
 ];
 
-let isHaunted = false;
-let currentSongIndex = 0;
-const bgMusic = new Audio(playlist[currentSongIndex]);
+const bgMusic = new Audio(isHaunted ? hauntedPlaylist[currentSongIndex] : playlist[currentSongIndex]);
 bgMusic.volume = 0.3;
 
 function playNextSong() {
     let activeList = isHaunted ? hauntedPlaylist : playlist;
-    currentSongIndex = (currentSongIndex + 1) % playlist.length;
-    bgMusic.src = playlist[currentSongIndex];
+    currentSongIndex = (currentSongIndex + 1) % activeList.length;
+    bgMusic.src = activeList[currentSongIndex];
     bgMusic.play().catch(error => console.log("Audio play blocked by the browser:"+error));
 }
-bgMusic.addEventListener("ended", playNextSong)
+bgMusic.addEventListener("ended", playNextSong);
+
+mainBootBtn.addEventListener('click', function() {
+    bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
+    bootScreen.style.display = "none";
+});
 
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
-
 
 petSelect.addEventListener("change", function(){
     currentPet = petSelect.value;
@@ -98,7 +97,6 @@ petSelect.addEventListener("change", function(){
     pet.className = `pet ${currentPet} ${currentAnim}`;
 });
 
-// Bars
 setInterval(function() {
     if (currentPet !== "ghost") {
         hunger = hunger - 0.9;
@@ -135,7 +133,7 @@ setInterval(function() {
     }
 
     if(energy <= 30) {
-        currentAnimation = "sleep"
+        currentAnimation = "sleep";
         energyStatus.innerText = "Energy: Tired";
     } else if(energy > 30 && energy < 60){
         energyStatus.innerText = "Energy: Getting Sleepy";
@@ -148,15 +146,15 @@ setInterval(function() {
     } else if(happiness > 30 && happiness < 60){
         happinessStatus.innerText = "Happiness: Bored";
     } else {
-        // max = 100;
-        happinessStatus.innerText = "Happiness: Happy!"
+        happinessStatus.innerText = "Happiness: Happy!";
     }
-        if(!isActing){
-            pet.className = `pet ${currentPet} ${currentAnimation}`
-        }
+    
+    if(!isActing){
+        pet.className = `pet ${currentPet} ${currentAnimation}`;
+    }
     
     if(hunger <= 0){
-        gameOverText.innerText = `${currentPet.toUpperCase()} has left this world because of YOU....And he is NEVER coming BACK.`
+        gameOverText.innerText = `${currentPet.toUpperCase()} has left this world because of YOU....And he is NEVER coming BACK.`;
         gameOverOverlay.classList.remove("hidden");
         let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
         if (currentOption) {
@@ -176,6 +174,7 @@ setInterval(function() {
         gameOverOverlay.classList.remove("hidden");
         energy = 100;
     }
+    
     let remainingPets = Array.from(petSelect.options).map(opt => opt.value);
     let gameState = {
         hunger: hunger,
@@ -187,11 +186,10 @@ setInterval(function() {
     localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
 
-// Buttons
 feedBtn.addEventListener('click', function(){
     feedSound.currentTime = 0;
     feedSound.play();
-    if (hunger < 100 && isActing){
+    if (hunger < 100 && !isActing){
         hunger += 15;
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
@@ -221,11 +219,15 @@ sleepBtn.addEventListener('click', function(){
 playBtn.addEventListener('click', function(){
     playSound.currentTime = 0;
     playSound.play();
-    if (happiness < 100){
+    if (happiness < 100 && !isActing){
         happiness += 10;
         if(happiness > 100) happiness = 100;
         happinessBar.value = happiness;
-        pet.className = `pet ${currentPet} happy`
+        isActing = true;
+        pet.className = `pet ${currentPet} happy`;
+        setTimeout(function() {
+            isActing = false;
+        }, 1000);
     }
 });
 
@@ -235,7 +237,7 @@ rebootBtn.addEventListener('click', function(){
     if (petSelect.options.length > 0) {
         currentPet = petSelect.options[0].value;
         petSelect.value = currentPet;
-        pet.className = `pet ${currentPet} idle`
+        pet.className = `pet ${currentPet} idle`;
     } else {
         gameOverText.innerText = "G A M E  O V E R :  N O O N E' S  L E F T.";
         isHaunted = true;
