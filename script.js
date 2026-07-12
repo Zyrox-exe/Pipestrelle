@@ -6,7 +6,6 @@ let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
 
-// 1. Define a master list of all pets to restore them when resetting
 const defaultPets = ["bear","bunny","cat","chick","dog","dragon","fox","frog","panda","penguin","slime"];
 
 let savedData = localStorage.getItem("pip_pet_state");
@@ -20,10 +19,8 @@ if(savedData){
     
     const selectElement = document.getElementById("petSelect");
     
-    // Clear the current dropdown options entirely
     selectElement.innerHTML = "";
     
-    // Rebuild the dropdown using only the alive pets
     aliveList.forEach(petValue => {
         let opt = document.createElement("option");
         opt.value = petValue;
@@ -31,24 +28,22 @@ if(savedData){
         selectElement.appendChild(opt);
     });
     
-    if(aliveList.length === 0 || currentPet === "ghost"){
+    if(aliveList.length === 0){
         isHaunted = true;
         selectElement.disabled = true;
     } else {
         selectElement.value = currentPet;
     }
 } else {
-    // 2. FRESH START: Explicitly restore everything to defaults
     hunger = 100;
     energy = 100;
     happiness = 100;
     currentPet = "cat";
-    isHaunted = false; // Turn off the haunting!
+    isHaunted = false;
     
     const selectElement = document.getElementById("petSelect");
-    selectElement.disabled = false; // Re-enable the dropdown
+    selectElement.disabled = false;
     
-    // Rebuild the full HTML dropdown list dynamically
     selectElement.innerHTML = "";
     defaultPets.forEach(petValue => {
         let opt = document.createElement("option");
@@ -136,9 +131,6 @@ setInterval(function() {
     hunger = 100;
     energy = 100;
     happiness = 100;
-    feedBtn.disabled = true;
-    sleepBtn.disabled = true;
-    playBtn.disabled = true;
     feedBtn.className = "disabledBtn";
     sleepBtn.className = "disabledBtn";
     playBtn.className = "disabledBtn";
