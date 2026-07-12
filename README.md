@@ -1,16 +1,24 @@
 # Pipestrelle(Pip)
-A cute and cozy virtual pet that lives inside your browser. Take good care of him or you might make him do something bad.
+A cute and cozy virtual pet that lives inside your browser. Choose from various options like cat, dog, panda etc. Take lots of care of your pet or you might never be able to meet it again.
 
 # Features
-- A pet inside your browser
+- Lots of pets inside your browser
 - Feed pip
 - Make pip sleep
 - Play with pip
+- Dont let Pip die
 
 # Highlights
 - Made using HTML5, CSS3 and vanilla JavaScript.
 - Helps feel heard.
-- Pixelated pet with minor animations.
+- Pixelated pets with minor animation.
+- Feels like living creatures
+
+# Image Gallery
+<p align="center">
+<img src="./assets/images/image1.png" width="45%">
+<img src="./assets/images/image2.png" width="45%">
+</p>
 
 # Make your own
 >It is recommended to make your own version of this virtual pet as it is very fun and teaches a lot.

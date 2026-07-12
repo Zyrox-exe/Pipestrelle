@@ -6,6 +6,9 @@ let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
 
+// 1. Define a master list of all pets to restore them when resetting
+const defaultPets = ["bear","bunny","cat","chick","dog","dragon","fox","frog","panda","penguin","slime"];
+
 let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
     let parsed = JSON.parse(savedData);
@@ -13,27 +16,47 @@ if(savedData){
     energy = parsed.energy;
     happiness = parsed.happiness;
     currentPet = parsed.pet;
-    let aliveList = parsed.aliveList || ["bear","bunny","cat","chick","dog","dragon","fox","frog","panda","penguin","slime"];
-    document.getElementById("petSelect").value = currentPet;
-
+    let aliveList = parsed.aliveList || defaultPets;
+    
     const selectElement = document.getElementById("petSelect");
-    Array.from(selectElement.options).forEach(option => {
-        if(!aliveList.includes(option.value)) {
-            option.remove();
-        }
+    
+    // Clear the current dropdown options entirely
+    selectElement.innerHTML = "";
+    
+    // Rebuild the dropdown using only the alive pets
+    aliveList.forEach(petValue => {
+        let opt = document.createElement("option");
+        opt.value = petValue;
+        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
+        selectElement.appendChild(opt);
     });
     
-    if(aliveList.length === 0 || (currentPet === "ghost" && aliveList.length === 0)){
+    if(aliveList.length === 0 || currentPet === "ghost"){
         isHaunted = true;
         selectElement.disabled = true;
+    } else {
+        selectElement.value = currentPet;
     }
-
-    selectElement.value = currentPet;
 } else {
+    // 2. FRESH START: Explicitly restore everything to defaults
     hunger = 100;
     energy = 100;
     happiness = 100;
     currentPet = "cat";
+    isHaunted = false; // Turn off the haunting!
+    
+    const selectElement = document.getElementById("petSelect");
+    selectElement.disabled = false; // Re-enable the dropdown
+    
+    // Rebuild the full HTML dropdown list dynamically
+    selectElement.innerHTML = "";
+    defaultPets.forEach(petValue => {
+        let opt = document.createElement("option");
+        opt.value = petValue;
+        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
+        selectElement.appendChild(opt);
+    });
+    selectElement.value = currentPet;
 }
 
 const hungerBar = document.getElementById("hungerBar");
@@ -99,20 +122,27 @@ petSelect.addEventListener("change", function(){
 
 setInterval(function() {
     if (currentPet !== "ghost") {
-        hunger = hunger - 0.9;
-        energy = energy - 0.5;
-        happiness = happiness - 0.75;
-    } else {
-        hunger = 100;
-        energy = 100;
-        happiness = 100;
-        feedBtn.disabled = true;
-        sleepBtn.disabled = true;
-        playBtn.disabled = true;
-        feedBtn.className = "disabledBtn";
-        sleepBtn.className = "disabledBtn";
-        playBtn.className = "disabledBtn";
-    }
+    hunger = hunger - 0.9;
+    energy = energy - 0.5;
+    happiness = happiness - 0.75;
+
+    feedBtn.disabled = false;
+    sleepBtn.disabled = false;
+    playBtn.disabled = false;
+    feedBtn.className = "";
+    sleepBtn.className = "";
+    playBtn.className = "";
+} else {
+    hunger = 100;
+    energy = 100;
+    happiness = 100;
+    feedBtn.disabled = true;
+    sleepBtn.disabled = true;
+    playBtn.disabled = true;
+    feedBtn.className = "disabledBtn";
+    sleepBtn.className = "disabledBtn";
+    playBtn.className = "disabledBtn";
+}
 
     if (hunger < 0) hunger = 0;
     if (energy < 0) energy = 0;
