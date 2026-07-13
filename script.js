@@ -6,7 +6,51 @@ let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
 
-const defaultPets = ["bear","bunny","cat","chick","dog","dragon","fox","frog","panda","penguin","slime"];
+const defaultPets = ["bunny","cat","dog","dragon","panda"];
+const pets = {
+    cat: {
+        folder: "Cat",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive = true
+    },
+    dog: {
+        folder: "Dog",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive = true
+    },
+    panda: {
+        folder: "Panda",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive = true
+    },
+    bunny: {
+        folder: "Bunny",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive = true
+    },
+    dragon: {
+        folder: "Dragon",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive = true
+    },
+    ghost: {
+        folder: "Ghost",
+        hungerDecay: 1.0,
+        energyDecay: 1.0,
+        happinessDecay: 1.0,
+        interactive: false
+    }
+};
 
 let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
@@ -105,28 +149,37 @@ mainBootBtn.addEventListener('click', function() {
     bootScreen.style.display = "none";
 });
 
+function setAnimation(state) {
+
+    const petData = pets[currentPet];
+    const image = `./assets/Pets/${folder}/${currentPet}_${state}_64.png`;
+    pet.style.setProperty("--sprite", `url("${image}")`);
+    pet.dataset.state = state;
+}
+
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
 
 petSelect.addEventListener("change", function(){
     currentPet = petSelect.value;
-    let currentAnim = pet.className.split(" ")[1] || "idle";
-    pet.className = `pet ${currentPet} ${currentAnim}`;
+    const currentAnim = pet.dataset.state || "idle";
+    setAnimation(currentAnim);
 });
 
 setInterval(function() {
-    if (currentPet !== "ghost") {
-    hunger = hunger - 0.9;
-    energy = energy - 0.5;
-    happiness = happiness - 0.75;
-
-    feedBtn.disabled = false;
-    sleepBtn.disabled = false;
-    playBtn.disabled = false;
-    feedBtn.className = "";
-    sleepBtn.className = "";
-    playBtn.className = "";
+    const petData = pets[currentPet];
+    if (petData.interactive) {
+        hunger -= petData.hungerDecay;
+        energy -= petData.energyDecay;
+        happiness -= petData.happinessDecay;
+        
+        feedBtn.disabled = false;
+        sleepBtn.disabled = false;
+        playBtn.disabled = false;
+        feedBtn.className = "";
+        sleepBtn.className = "";
+        playBtn.className = "";
 } else {
     hunger = 100;
     energy = 100;
@@ -172,7 +225,7 @@ setInterval(function() {
     }
     
     if(!isActing){
-        pet.className = `pet ${currentPet} ${currentAnimation}`;
+        setAnimation(currentAnimation);
     }
     
     if(hunger <= 0){
@@ -216,7 +269,7 @@ feedBtn.addEventListener('click', function(){
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
         isActing = true;
-        pet.className = `pet ${currentPet} jump`;
+        setAnimation("jump");
         setTimeout(function() {
             isActing = false;
         }, 1000);
@@ -231,7 +284,7 @@ sleepBtn.addEventListener('click', function(){
         if(energy > 100) energy = 100;
         energyBar.value = energy;
         isActing = true;
-        pet.className = `pet ${currentPet} sleep`;
+        setAnimation("sleep");
         setTimeout(function() {
             isActing = false;
         }, 2000); 
@@ -246,7 +299,7 @@ playBtn.addEventListener('click', function(){
         if(happiness > 100) happiness = 100;
         happinessBar.value = happiness;
         isActing = true;
-        pet.className = `pet ${currentPet} happy`;
+        setAnimation("happy");
         setTimeout(function() {
             isActing = false;
         }, 1000);
@@ -259,7 +312,7 @@ rebootBtn.addEventListener('click', function(){
     if (petSelect.options.length > 0) {
         currentPet = petSelect.options[0].value;
         petSelect.value = currentPet;
-        pet.className = `pet ${currentPet} idle`;
+        setAnimation("idle");
     } else {
         gameOverText.innerText = "G A M E  O V E R :  N O O N E' S  L E F T.";
         isHaunted = true;
