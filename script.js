@@ -8,94 +8,26 @@ let isActing = false;
 
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
-    cat: {
-        folder: "Cat",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive = true
-    },
-    dog: {
-        folder: "Dog",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive = true
-    },
-    panda: {
-        folder: "Panda",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive = true
-    },
-    bunny: {
-        folder: "Bunny",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive = true
-    },
-    dragon: {
-        folder: "Dragon",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive = true
-    },
-    ghost: {
-        folder: "Ghost",
-        hungerDecay: 1.0,
-        energyDecay: 1.0,
-        happinessDecay: 1.0,
-        interactive: false
-    }
+    cat: { folder: "Cat", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
+    dog: { folder: "Dog", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
+    panda: { folder: "Panda", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
+    bunny: { folder: "Bunny", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
+    dragon: { folder: "Dragon", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
+    ghost: { folder: "Ghost", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: false }
 };
 
-let savedData = localStorage.getItem("pip_pet_state");
-if(savedData){
-    let parsed = JSON.parse(savedData);
-    hunger = parsed.hunger;
-    energy = parsed.energy;
-    happiness = parsed.happiness;
-    currentPet = parsed.pet;
-    let aliveList = parsed.aliveList || defaultPets;
+function setAnimation(state) {
+    const petData = pets[currentPet];
+    if (!petData) return; // Safety guard if data is corrupt
     
-    const selectElement = document.getElementById("petSelect");
+    const folder = petData.folder; // FIXED: Folder scope variable resolved!
+    const image = `./assets/Pets/${folder}/${currentPet}_${state}_64.png`;
     
-    selectElement.innerHTML = "";
-    
-    aliveList.forEach(petValue => {
-        let opt = document.createElement("option");
-        opt.value = petValue;
-        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
-        selectElement.appendChild(opt);
-    });
-    
-    if(aliveList.length === 0){
-        isHaunted = true;
-        selectElement.disabled = true;
-    } else {
-        selectElement.value = currentPet;
+    const petElement = document.querySelector(".pet");
+    if (petElement) {
+        petElement.style.setProperty("--sprite", `url("${image}")`);
+        petElement.dataset.state = state;
     }
-} else {
-    hunger = 100;
-    energy = 100;
-    happiness = 100;
-    currentPet = "cat";
-    isHaunted = false;
-    
-    const selectElement = document.getElementById("petSelect");
-    selectElement.disabled = false;
-    
-    selectElement.innerHTML = "";
-    defaultPets.forEach(petValue => {
-        let opt = document.createElement("option");
-        opt.value = petValue;
-        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
-        selectElement.appendChild(opt);
-    });
-    selectElement.value = currentPet;
 }
 
 const hungerBar = document.getElementById("hungerBar");
@@ -133,6 +65,47 @@ const hauntedPlaylist = [
     "./assets/music/ending_music/sayo_nara.mp3"
 ];
 
+let savedData = localStorage.getItem("pip_pet_state");
+if(savedData){
+    let parsed = JSON.parse(savedData);
+    hunger = parsed.hunger;
+    energy = parsed.energy;
+    happiness = parsed.happiness;
+    currentPet = parsed.pet;
+    let aliveList = parsed.aliveList || defaultPets;
+    
+    petSelect.innerHTML = "";
+    aliveList.forEach(petValue => {
+        let opt = document.createElement("option");
+        opt.value = petValue;
+        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
+        petSelect.appendChild(opt);
+    });
+    
+    if(aliveList.length === 0){
+        isHaunted = true;
+        petSelect.disabled = true;
+    } else {
+        petSelect.value = currentPet;
+    }
+} else {
+    hunger = 100;
+    energy = 100;
+    happiness = 100;
+    currentPet = "cat";
+    isHaunted = false;
+    
+    petSelect.disabled = false;
+    petSelect.innerHTML = "";
+    defaultPets.forEach(petValue => {
+        let opt = document.createElement("option");
+        opt.value = petValue;
+        opt.innerText = petValue.charAt(0).toUpperCase() + petValue.slice(1);
+        petSelect.appendChild(opt);
+    });
+    petSelect.value = currentPet;
+}
+
 const bgMusic = new Audio(isHaunted ? hauntedPlaylist[currentSongIndex] : playlist[currentSongIndex]);
 bgMusic.volume = 0.3;
 
@@ -144,22 +117,15 @@ function playNextSong() {
 }
 bgMusic.addEventListener("ended", playNextSong);
 
+hungerStatus.innerText = "Hunger: Good";
+energyStatus.innerText = "Energy: Awake";
+happinessStatus.innerText = "Happiness: Content";
+setAnimation("idle"); // Safely sets the initial sprite frame
+
 mainBootBtn.addEventListener('click', function() {
     bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
     bootScreen.style.display = "none";
 });
-
-function setAnimation(state) {
-
-    const petData = pets[currentPet];
-    const image = `./assets/Pets/${folder}/${currentPet}_${state}_64.png`;
-    pet.style.setProperty("--sprite", `url("${image}")`);
-    pet.dataset.state = state;
-}
-
-hungerStatus.innerText = "Hunger: Good";
-energyStatus.innerText = "Energy: Awake";
-happinessStatus.innerText = "Happiness: Content";
 
 petSelect.addEventListener("change", function(){
     currentPet = petSelect.value;
@@ -169,6 +135,8 @@ petSelect.addEventListener("change", function(){
 
 setInterval(function() {
     const petData = pets[currentPet];
+    if (!petData) return;
+
     if (petData.interactive) {
         hunger -= petData.hungerDecay;
         energy -= petData.energyDecay;
@@ -180,14 +148,17 @@ setInterval(function() {
         feedBtn.className = "";
         sleepBtn.className = "";
         playBtn.className = "";
-} else {
-    hunger = 100;
-    energy = 100;
-    happiness = 100;
-    feedBtn.className = "disabledBtn";
-    sleepBtn.className = "disabledBtn";
-    playBtn.className = "disabledBtn";
-}
+    } else {
+        hunger = 100;
+        energy = 100;
+        happiness = 100;
+        feedBtn.disabled = true;
+        sleepBtn.disabled = true;
+        playBtn.disabled = true;
+        feedBtn.className = "disabledBtn";
+        sleepBtn.className = "disabledBtn";
+        playBtn.className = "disabledBtn";
+    }
 
     if (hunger < 0) hunger = 0;
     if (energy < 0) energy = 0;
@@ -236,10 +207,10 @@ setInterval(function() {
             currentOption.remove();
         }
         currentPet = "ghost";
-        pet.className = "pet ghost idle";
         hunger = 100;
         energy = 100;
         happiness = 100;
+        setAnimation("idle");
     } else if(happiness <= 0){
         gameOverText.innerText = "Play with Pip if you want to stay with him.";
         gameOverOverlay.classList.remove("hidden");
@@ -322,7 +293,7 @@ rebootBtn.addEventListener('click', function(){
         bgMusic.src = hauntedPlaylist[currentSongIndex];
         bgMusic.play().catch(e => console.log(e));
         currentPet = "ghost";
-        pet.className = "pet ghost idle";
         petSelect.disabled = true;
+        setAnimation("idle");
     }
 });
