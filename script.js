@@ -1,3 +1,4 @@
+//=============Global Variables================
 let hunger;
 let energy;
 let happiness;
@@ -6,7 +7,7 @@ let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
 let nextBehaviourTime = Date.now() + 15000;
-
+//========Pets Data===============
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
     cat: {
@@ -18,7 +19,8 @@ const pets = {
 
         feed: 15,
         sleep: 25,
-        play: 8
+        play: 8,
+        ignorePlayChance: 0.30
     },
     dog: {
         folder: "Dog",
@@ -29,7 +31,8 @@ const pets = {
 
         feed: 15,
         sleep: 18,
-        play: 20
+        play: 20,
+        excitementChance: 0.40
     },
     panda: {
         folder: "Panda",
@@ -40,7 +43,8 @@ const pets = {
 
         feed: 20,
         sleep: 35,
-        play: 10
+        play: 10,
+        extraSleepChance: 0.50
     },
     bunny: {
         folder: "Bunny",
@@ -51,7 +55,8 @@ const pets = {
 
         feed: 12,
         sleep: 20,
-        play: 18
+        play: 18,
+        extraHopChance: 0.35
     },
     dragon: {
         folder: "Dragon",
@@ -62,7 +67,8 @@ const pets = {
 
         feed: 30,
         sleep: 15,
-        play: 5
+        play: 5,
+        angryThreshold: 20
     },
     ghost: {
         folder: "Ghost",
@@ -76,7 +82,7 @@ const pets = {
         play: 0
     }
 };
-
+//==============Pets Animation================
 function setAnimation(state) {
     const petData = pets[currentPet];
     if (!petData) return;
@@ -90,7 +96,7 @@ function setAnimation(state) {
         petElement.dataset.state = state;
     }
 }
-
+//=========More global constants===============
 const hungerBar = document.getElementById("hungerBar");
 const feedBtn = document.getElementById("feedBtn");
 const energyBar = document.getElementById("energyBar");
@@ -125,7 +131,7 @@ const hauntedPlaylist = [
     "./assets/music/ending_music/ohayou_sayori_glitch.mp3",
     "./assets/music/ending_music/sayo_nara.mp3"
 ];
-
+//============Local Storage=================
 let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
     let parsed = JSON.parse(savedData);
@@ -166,7 +172,7 @@ if(savedData){
     });
     petSelect.value = currentPet;
 }
-
+//===========Music========
 const bgMusic = new Audio(isHaunted ? hauntedPlaylist[currentSongIndex] : playlist[currentSongIndex]);
 bgMusic.volume = 0.3;
 
@@ -232,18 +238,20 @@ function pandaBehaviour() {
      setTimeout(() => { isActing = false;}, 2000);
 }
 function dragonBehaviour() {
+    const petData = pets[currentPet];
+    if(hunger> petData.angryThreshold) return;
      isActing = true;
      setAnimation("jump");
      setTimeout(() => { isActing = false;}, 1000);
 }
 function catBehaviour() {
-    if (Math.random() < 0.3)
+    if (Math.random() < pets[currentPet].ignorePlayChance)
         return;
      isActing = true;
      setAnimation("sleep");
      setTimeout(() => { isActing = false;}, 2000);
 }
-
+// ===========Progress Logic=================
 setInterval(function() {
     const petData = pets[currentPet];
     if (!petData) return;
@@ -345,50 +353,61 @@ setInterval(function() {
     };
     localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
-
+// ===============Buttons==============
 feedBtn.addEventListener('click', function(){
+    const petData = pets[currentPet];
+    if (hunger >= 100 || isActing || !petData.interactive) return;
     feedSound.currentTime = 0;
     feedSound.play();
-    if (hunger < 100 && !isActing){
-        hunger += pets[currentPet].feed;
-        if(hunger > 100) hunger = 100;
-        hungerBar.value = hunger;
-        isActing = true;
-        setAnimation("jump");
-        setTimeout(function() {
-            isActing = false;
-        }, 1000);
-    }
+    hunger = Math.min(100, hunger + petData.feed);
+    hungerBar.value = hunger;
+    isActing = true;
+    setAnimation("jump");
+    setTimeout(() => {isActing = false;}, 1000);
 });
 
 sleepBtn.addEventListener('click', function(){
+    const petData = pets[currentPet];
+    if (energy >= 100 || isActing || !petData.interactive) return;
     sleepSound.currentTime = 0;
     sleepSound.play();
-    if (energy < 100 && !isActing){
-        energy += pets[currentPet].sleep;
-        if(energy > 100) energy = 100;
-        energyBar.value = energy;
-        isActing = true;
-        setAnimation("sleep");
-        setTimeout(function() {
-            isActing = false;
-        }, 2000); 
-    }
+    energy = Math.min(100, energy + petData.sleep);
+    energyBar.value = energy;
+    isActing = true;
+    setAnimation("sleep");
+    const duration = Math.random() < (petData.extraSleepChance || 0) ? 4000 : 2000;
+    setTimeout(() => {
+       isActing = false; 
+    }, duration);
 });
 
 playBtn.addEventListener('click', function(){
+    const petData = pets[currentPet];
+    if (happiness >= 100 || isActing || !petData.interactive) return;
+    if(Math.random()<(petData.ignorePlayChance || 0)) {
+        return;
+    }
     playSound.currentTime = 0;
     playSound.play();
-    if (happiness < 100 && !isActing){
-        happiness += pets[currentPet].play;
-        if(happiness > 100) happiness = 100;
-        happinessBar.value = happiness;
-        isActing = true;
-        setAnimation("happy");
-        setTimeout(function() {
-            isActing = false;
-        }, 1000);
+    happiness = Math.min(100, happiness + petData.play);
+
+    if (Math.random() < (petData.excitementChance || 0)){
+        happiness = Math.min(100, happiness + 5);
     }
+    happinessBar.value = happiness;
+    isActing = true;
+    setAnimation("happy");
+    setTimeout(() => {
+        if(Math.random()<(petData.extraHopChance || 0)){
+            setAnimation("jump")
+            setTimeout(() => {
+                    isActing = false;
+                }, 1000);
+        } else {
+            isActing = false;
+        }
+        
+    }, 1000);
 });
 
 rebootBtn.addEventListener('click', function(){
