@@ -82,6 +82,39 @@ const pets = {
         play: 0
     }
 };
+
+const petSpeech = {
+    cat:[
+        "Leave me alone.",
+        "...",
+        "Meow",
+        "I am watching you."
+    ],
+    dog:[
+        "woof!",
+        "Play with me!",
+        "You're back, woof!!",
+        "That was nice."
+    ],
+    bunny:[
+        "Hop!",
+        "Did you get my Carrots?",
+        "Let's Bounce",
+        "Hop, Hop!"
+    ],
+    panda:[
+        "Five more minutes...",
+        "*yawn*",
+        "I'm sleepy.",
+        "Meh!"
+    ],
+    dragon:[
+        "Feed me!",
+        "Roar!",
+        "I'm hungry.",
+        "Get Away insect!"
+    ],
+}
 //==============Pets Animation================
 function setAnimation(state) {
     const petData = pets[currentPet];
@@ -122,6 +155,8 @@ const mainBootBtn = document.getElementById("bootBtn");
 const feedSound = new Audio("./assets/Sound-Effects/eating.mp3");
 const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
 const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
+
+const speechBubble = document.getElementById("speechBubble");
 
 
 const playlist = [
@@ -218,6 +253,7 @@ petSelect.addEventListener("change", function(){
 });
 // ============Pet Behavours==============
 function randomBehaviour() {
+    speak()
     if (isActing) return;
     switch (currentPet) {
         case "bunny":
@@ -267,6 +303,15 @@ function catBehaviour() {
      isActing = true;
      setAnimation("sleep");
      setTimeout(() => { isActing = false;}, 2000);
+}
+function speak(){
+    const list = petSpeech[currentPet];
+    if(!list) return;
+    speechBubble.innerText = list[Math.floor(Math.random()*list.length)];
+    speechBubble.classList.remove("hidden");
+    setTimeout(() => {
+        speechBubble.classList.add("hidden");
+    }, 2500);
 }
 // ===========Progress Logic=================
 setInterval(function() {

@@ -50,7 +50,7 @@ body{
     background-image: url(./assets/images/Backgrounds/bg_Autumn.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: bottom;
     border: 2px solid #00f0ff;
     border-radius: 8px;
     display: flex;
@@ -58,6 +58,32 @@ body{
     align-items: center;
     overflow: hidden;
     transition: background-image .8s;
+}
+#speechBubble {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    max-width: 180px;
+    text-align: center;
+    z-index: 5;
+    animation: pop 0.2s;
+}
+#speechBubble::after{
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
 }
 #petSelect{
     background-color: #120e2e;
@@ -154,6 +180,8 @@ button:active {
     align-items: center;
 }
 .pet{
+    position: absolute;
+    bottom: 15vh;
     width: 64px;
     height: 64px;
     display: inline-block;
@@ -199,5 +227,15 @@ button:active {
 @keyframes spriteAnimation {
     to{
         background-position: -512px;
+    }
+}
+@keyframes pop {
+    from{
+        transform: translateX(-50%) scale(0.8);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
     }
 }
