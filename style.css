@@ -46,12 +46,18 @@ body{
     font-size: 14px;
 }
 .arcadeScreen{
-    background-color: #0d0921;
+    position: relative;
+    background-image: url(./assets/images/Backgrounds/bg_Autumn.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     border: 2px solid #00f0ff;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    transition: background-image .8s;
 }
 #petSelect{
     background-color: #120e2e;

@@ -123,6 +123,7 @@ const feedSound = new Audio("./assets/Sound-Effects/eating.mp3");
 const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
 const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
 
+
 const playlist = [
     "./assets/music/ddlc_main_theme.mp3",
     "./assets/music/ohayou_sayori.mp3"
@@ -131,6 +132,22 @@ const hauntedPlaylist = [
     "./assets/music/ending_music/ohayou_sayori_glitch.mp3",
     "./assets/music/ending_music/sayo_nara.mp3"
 ];
+const backgrounds = [
+    "./assets/images/Backgrounds/bg_Autumn.png",
+    "./assets/images/Backgrounds/bg_spring.png",
+    "./assets/images/Backgrounds/bg_summer.png",
+    "./assets/images/Backgrounds/bg_winter.png"
+]
+let currentBackground = 0;
+function changeBackground(index){
+    gameContainer.querySelector(".arcadeScreen").style.backgroundImage = `url(${backgrounds[index]})`;
+}
+setInterval(() => {
+    currentBackground++;
+    if(currentBackground >= backgrounds.length)
+        currentBackground = 0;
+    changeBackground(currentBackground);
+},60000);
 //============Local Storage=================
 let savedData = localStorage.getItem("pip_pet_state");
 if(savedData){
