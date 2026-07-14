@@ -193,6 +193,10 @@ button:active {
     background-repeat: no-repeat;
     background-position: left center;
     animation: spriteAnimation 0.8s steps(8) infinite;
+    transition: opacity 0.6s ease;
+}
+.pet.fadeOut{
+    opacity: 0;
 }
 .hidden{
     display: none !important;
@@ -211,6 +215,19 @@ button:active {
     align-items: center;
     z-index: 10;
     border-radius: 6px;
+}
+
+#deathFade{
+    position: absolute;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    z-index: 4;
+}
+#deathFade.active{
+    opacity: 0.55;
 }
 
 #gameOverText{

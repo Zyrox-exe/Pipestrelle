@@ -115,6 +115,22 @@ const petSpeech = {
         "Get Away insect!"
     ],
 }
+const glitchWords = ["HELP","DIE","REPENT","lemme out","I'M trapped","WHY?"];
+const titleGlitchWords = ["...help me","come back","don't leave","still here","PIPIP"];
+const normalTitle = document.title;
+
+document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+        const statsLow = hunger <= 30 || energy <= 30 || happiness <= 30;
+        if (statsLow && Math.random() < 0.5) {
+            const word = titleGlitchWords[Math.floor(Math.random() * titleGlitchWords.length)];
+            document.title = word;
+        }
+    } else {
+        document.title = normalTitle;
+    }
+});
+
 //==============Pets Animation================
 function setAnimation(state) {
     const petData = pets[currentPet];
@@ -157,20 +173,20 @@ const sleepSound = new Audio("./assets/Sound-Effects/sleep.wav");
 const playSound = new Audio("./assets/Sound-Effects/yay.mp3");
 
 const speechBubble = document.getElementById("speechBubble");
-
+const deathFade = document.getElementById("deathFade");
 
 const playlist = [
     "./assets/music/ddlc_main_theme.mp3",
     "./assets/music/ohayou_sayori.mp3"
 ];
 const hauntedPlaylist = [
-    "./assets/music/ending_music/ohayou_sayori_glitch.mp3",
-    "./assets/music/ending_music/sayo_nara.mp3"
+    "./assets/music/ending_music/sayo_nara.mp3",
+    "./assets/music/ending_music/ohayou_sayori_glitch.mp3"
 ];
 const backgrounds = [
-    "./assets/images/Backgrounds/bg_Autumn.png",
-    "./assets/images/Backgrounds/bg_spring.png",
     "./assets/images/Backgrounds/bg_summer.png",
+    "./assets/images/Backgrounds/bg_spring.png",
+    "./assets/images/Backgrounds/bg_Autumn.png",
     "./assets/images/Backgrounds/bg_winter.png"
 ]
 let currentBackground = 0;
@@ -338,6 +354,26 @@ function speak(){
        speechBubble.classList.add("hidden"); 
     }, 2500);
 }
+// =========Glitchy Part==================
+function triggerUiGlitch() {
+    const buttons = [feedBtn,sleepBtn,playBtn];
+    const targetButton = buttons[Math.floor(Math.random() * buttons.length)];
+    const originalText = targetButton.innerText;
+    const creepyWord = glitchWords[Math.floor(Math.random() * glitchWords.length)];
+    
+    targetButton.innerText = creepyWord;
+    targetButton.style.color = '#ff0055';
+    targetButton.style.textShadow = '0 0 8px #ff0055';
+
+    setTimeout(() => {
+       if(targetButton.innerText === creepyWord) {
+        targetButton.innerText = originalText;
+        targetButton.style.color = "";
+        targetButton.style.textShadow = '';
+       } 
+    }, 300);
+}
+
 // ===========Progress Logic=================
 setInterval(function() {
     const petData = pets[currentPet];
@@ -406,17 +442,24 @@ setInterval(function() {
     }
     
     if(hunger <= 0){
-        gameOverText.innerText = `${currentPet.toUpperCase()} has left this world because of YOU....And he is NEVER coming BACK.`;
-        gameOverOverlay.classList.remove("hidden");
-        let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
-        if (currentOption) {
-            currentOption.remove();
-        }
-        currentPet = "ghost";
-        hunger = 100;
-        energy = 100;
-        happiness = 100;
-        setAnimation("idle");
+        pet.classList.add("fadeOut")
+        deathFade.classList.add("active");
+        setTimeout(() => {
+            bgMusic.pause();
+            gameOverText.innerText = `YOU FoRgOt AbOuT mE dIdN't you?`;
+            gameOverOverlay.classList.remove("hidden");
+            let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
+            if (currentOption) {
+                currentOption.remove();
+            }
+            currentPet = "ghost";
+            hunger = 100;
+            energy = 100;
+            happiness = 100;
+            setAnimation("idle");
+            pet.classList.remove("fadeOut");
+            deathFade.classList.remove("active");
+        }, 600);
     } else if(happiness <= 0){
         gameOverText.innerText = "Play with Pip if you want to stay with him.";
         gameOverOverlay.classList.remove("hidden");
@@ -435,9 +478,14 @@ setInterval(function() {
         pet: currentPet,
         aliveList: remainingPets
     }
+    if (petData.interactive && (hunger < 30 || energy < 30 || happiness < 30)) {
+        if (Math.random() < 0.15){
+            triggerUiGlitch();
+        }
+    }
     if (Date.now() >= nextBehaviourTime) {
         randomBehaviour();
-    };
+    }
     localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
 // ===============Buttons==============
@@ -499,11 +547,16 @@ playBtn.addEventListener('click', function(){
 
 rebootBtn.addEventListener('click', function(){
     gameOverOverlay.classList.add("hidden");
-
+    if (!isDeathOverlay) {
+        setAnimation("idle");
+        return;
+    }
     if (petSelect.options.length > 0) {
         currentPet = petSelect.options[0].value;
         petSelect.value = currentPet;
         setAnimation("idle");
+        bgMusic.currentTime = 0;
+        bgMusic.play();
     } else {
         gameOverText.innerText = "G A M E  O V E R :  N O O N E' S  L E F T.";
         isHaunted = true;
@@ -516,4 +569,5 @@ rebootBtn.addEventListener('click', function(){
         petSelect.disabled = true;
         setAnimation("idle");
     }
+    isDeathOverlay = false;
 });
