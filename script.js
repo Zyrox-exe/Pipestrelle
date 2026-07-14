@@ -8,19 +8,79 @@ let isActing = false;
 
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
-    cat: { folder: "Cat", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
-    dog: { folder: "Dog", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
-    panda: { folder: "Panda", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
-    bunny: { folder: "Bunny", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
-    dragon: { folder: "Dragon", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: true },
-    ghost: { folder: "Ghost", hungerDecay: 1.0, energyDecay: 1.0, happinessDecay: 1.0, interactive: false }
+    cat: {
+        folder: "Cat",
+        hungerDecay: 0.8,
+        energyDecay: 0.4,
+        happinessDecay: 0.35,
+        interactive: true,
+
+        feed: 15,
+        sleep: 25,
+        play: 8
+    },
+    dog: {
+        folder: "Dog",
+        hungerDecay: 1,
+        energyDecay: 0.7,
+        happinessDecay: 1.2,
+        interactive: true,
+
+        feed: 15,
+        sleep: 18,
+        play: 20
+    },
+    panda: {
+        folder: "Panda",
+        hungerDecay: 0.7,
+        energyDecay: 0.25,
+        happinessDecay: 0.45,
+        interactive: true,
+
+        feed: 20,
+        sleep: 35,
+        play: 10
+    },
+    bunny: {
+        folder: "Bunny",
+        hungerDecay: 1.3,
+        energyDecay: 0.8,
+        happinessDecay: 0.9,
+        interactive: true,
+
+        feed: 12,
+        sleep: 20,
+        play: 18
+    },
+    dragon: {
+        folder: "Dragon",
+        hungerDecay: 1.6,
+        energyDecay: 0.6,
+        happinessDecay: 0.25,
+        interactive: true,
+
+        feed: 30,
+        sleep: 15,
+        play: 5
+    },
+    ghost: {
+        folder: "Ghost",
+        hungerDecay: 0,
+        energyDecay: 0,
+        happinessDecay: 0,
+        interactive: false,
+
+        feed: 0,
+        sleep: 0,
+        play: 0
+    }
 };
 
 function setAnimation(state) {
     const petData = pets[currentPet];
-    if (!petData) return; // Safety guard if data is corrupt
+    if (!petData) return;
     
-    const folder = petData.folder; // FIXED: Folder scope variable resolved!
+    const folder = petData.folder;
     const image = `./assets/Pets/${folder}/${currentPet}_${state}_64.png`;
     
     const petElement = document.querySelector(".pet");
@@ -120,7 +180,7 @@ bgMusic.addEventListener("ended", playNextSong);
 hungerStatus.innerText = "Hunger: Good";
 energyStatus.innerText = "Energy: Awake";
 happinessStatus.innerText = "Happiness: Content";
-setAnimation("idle"); // Safely sets the initial sprite frame
+setAnimation("idle");
 
 mainBootBtn.addEventListener('click', function() {
     bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
@@ -236,7 +296,7 @@ feedBtn.addEventListener('click', function(){
     feedSound.currentTime = 0;
     feedSound.play();
     if (hunger < 100 && !isActing){
-        hunger += 15;
+        hunger += pets[currentPet].feed;
         if(hunger > 100) hunger = 100;
         hungerBar.value = hunger;
         isActing = true;
@@ -251,7 +311,7 @@ sleepBtn.addEventListener('click', function(){
     sleepSound.currentTime = 0;
     sleepSound.play();
     if (energy < 100 && !isActing){
-        energy += 20;
+        energy += pets[currentPet].sleep;
         if(energy > 100) energy = 100;
         energyBar.value = energy;
         isActing = true;
@@ -266,7 +326,7 @@ playBtn.addEventListener('click', function(){
     playSound.currentTime = 0;
     playSound.play();
     if (happiness < 100 && !isActing){
-        happiness += 10;
+        happiness += pets[currentPet].play;
         if(happiness > 100) happiness = 100;
         happinessBar.value = happiness;
         isActing = true;
