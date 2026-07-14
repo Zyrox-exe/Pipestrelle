@@ -5,6 +5,7 @@ let currentPet;
 let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
+let nextBehaviourTime = Date.now() + 15000;
 
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
@@ -192,6 +193,56 @@ petSelect.addEventListener("change", function(){
     const currentAnim = pet.dataset.state || "idle";
     setAnimation(currentAnim);
 });
+// ============Pet Behavours==============
+function randomBehaviour() {
+    if (isActing) return;
+    switch (currentPet) {
+        case "bunny":
+            bunnyBehaviour();
+            break;
+        case "cat":
+            catBehaviour();
+            break;
+        case "dog":
+            dogBehaviour();
+            break;
+        case "dragon":
+            dragonBehaviour();
+            break;
+        case "panda":
+            pandaBehaviour();
+            break;
+    }
+    nextBehaviourTime = Date.now() + 15000 + Math.random() * 15000;
+}
+function dogBehaviour() {
+     isActing = true;
+     setAnimation("happy");
+     setTimeout(() => { isActing = false;}, 1000);
+}
+function bunnyBehaviour() {
+     isActing = true;
+     setAnimation("jump");
+     setTimeout(() => { isActing = false;}, 1000);
+}
+function pandaBehaviour() {
+     isActing = true;
+     setAnimation("sleep");
+     sleepSound.play();
+     setTimeout(() => { isActing = false;}, 2000);
+}
+function dragonBehaviour() {
+     isActing = true;
+     setAnimation("jump");
+     setTimeout(() => { isActing = false;}, 1000);
+}
+function catBehaviour() {
+    if (Math.random() < 0.3)
+        return;
+     isActing = true;
+     setAnimation("sleep");
+     setTimeout(() => { isActing = false;}, 2000);
+}
 
 setInterval(function() {
     const petData = pets[currentPet];
@@ -288,6 +339,9 @@ setInterval(function() {
         happiness: happiness,
         pet: currentPet,
         aliveList: remainingPets
+    }
+    if (Date.now() >= nextBehaviourTime) {
+        randomBehaviour();
     };
     localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
