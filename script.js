@@ -305,12 +305,37 @@ function catBehaviour() {
      setTimeout(() => { isActing = false;}, 2000);
 }
 function speak(){
-    const list = petSpeech[currentPet];
-    if(!list) return;
-    speechBubble.innerText = list[Math.floor(Math.random()*list.length)];
+    if(!speechBubble.classList.contains("hidden")) return;
+    let messages;
+    if(hunger <= 30) {
+        messages = [
+            "I'm hungry man...",
+            "Food please...",
+            "My tummy hurts..."
+        ];
+    }
+    else if (energy <= 30) {
+        messages = [
+            "I'm sleepy...",
+            "*yawn*",
+            "Need a nap..."
+        ];
+    }
+    else if (happiness <= 30) {
+        messages = [
+            "Lets play something!",
+            "I'm lonely...",
+            "Don't ignore me..."
+        ]
+    }
+    else{
+        messages = petSpeech[currentPet];
+    }
+    if(!messages) return;
+    speechBubble.innerText = messages[Math.floor(Math.random()*messages.length)];
     speechBubble.classList.remove("hidden");
     setTimeout(() => {
-        speechBubble.classList.add("hidden");
+       speechBubble.classList.add("hidden"); 
     }, 2500);
 }
 // ===========Progress Logic=================
