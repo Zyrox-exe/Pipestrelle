@@ -9,6 +9,7 @@ let isActing = false;
 let nextBehaviourTime = Date.now() + 15000;
 let isDeathOverlay = false;
 let deadPets = [];
+let lastTick = Date.now();
 //========Pets Data===============
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
@@ -121,17 +122,31 @@ const glitchWords = ["HELP","DIE","REPENT","lemme out","I'M trapped","WHY?"]
 const titleGlitchWords = ["...help me", "come back", "don't leave", "still here?", "PIP"];
 const normalTitle = document.title;
 
-document.addEventListener("visibilitychange", function() {
-    if (document.hidden) {
-        const statsLow = hunger <= 30 || energy <= 30 || happiness <= 30;
-        if (statsLow && Math.random() < 0.5) {
-            const word = titleGlitchWords[Math.floor(Math.random() * titleGlitchWords.length)];
-            document.title = word;
-        }
-    } else {
-        document.title = normalTitle;
+const backgrounds = [
+    "./assets/images/Backgrounds/bg_summer.png",
+    "./assets/images/Backgrounds/bg_spring.png",
+    "./assets/images/Backgrounds/bg_Autumn.png",
+    "./assets/images/Backgrounds/bg_winter.png"
+]
+
+// ============ Asset Preloading =================
+function preloadAssets() {
+    const states = ["idle", "sleep", "jump", "happy"];
+    const imagesToPreload = [];
+    for (const petKey in pets) {
+        const folder = pets[petKey].folder;
+        states.forEach(state => {
+            imagesToPreload.push(`./assets/Pets/${folder}/${petKey}_${state}_64.png`);
+        });
     }
-});
+    backgrounds.forEach(bg => imagesToPreload.push(bg));
+    imagesToPreload.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+preloadAssets();
+
 //==============Pets Animation================
 function setAnimation(state) {
     const petData = pets[currentPet];
@@ -184,12 +199,6 @@ const hauntedPlaylist = [
     "./assets/music/ending_music/sayo_nara.mp3",
     "./assets/music/ending_music/ohayou_sayori_glitch.mp3"
 ];
-const backgrounds = [
-    "./assets/images/Backgrounds/bg_summer.png",
-    "./assets/images/Backgrounds/bg_spring.png",
-    "./assets/images/Backgrounds/bg_Autumn.png",
-    "./assets/images/Backgrounds/bg_winter.png"
-]
 let currentBackground = 0;
 function changeBackground(index){
     gameContainer.querySelector(".arcadeScreen").style.backgroundImage = `url(${backgrounds[index]})`;
@@ -393,10 +402,14 @@ setInterval(function() {
     const petData = pets[currentPet];
     if (!petData) return;
 
+    let now = Date.now();
+    let deltaSeconds = (now - lastTick) / 1000;
+    lastTick = now;
+
     if (petData.interactive) {
-        hunger -= petData.hungerDecay;
-        energy -= petData.energyDecay;
-        happiness -= petData.happinessDecay;
+        hunger -= petData.hungerDecay * deltaSeconds;
+        energy -= petData.energyDecay * deltaSeconds;
+        happiness -= petData.happinessDecay * deltaSeconds;
         
         feedBtn.disabled = false;
         sleepBtn.disabled = false;
@@ -487,16 +500,6 @@ setInterval(function() {
         isDeathOverlay = false;
         energy = 100;
     }
-    
-    let remainingPets = Array.from(petSelect.options).map(opt => opt.value);
-    let gameState = {
-        hunger: hunger,
-        energy: energy,
-        happiness: happiness,
-        pet: currentPet,
-        aliveList: remainingPets,
-        deadPets: deadPets
-    }
     if (petData.interactive && (hunger < 30 || energy < 30 || happiness < 30)) {
         if (Math.random() < 0.15){
             triggerUiGlitch();
@@ -505,7 +508,6 @@ setInterval(function() {
     if (Date.now() >= nextBehaviourTime) {
         randomBehaviour();
     }
-    localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
 }, 1000);
 // ===============Buttons==============
 feedBtn.addEventListener('click', function(){
@@ -593,4 +595,32 @@ rebootBtn.addEventListener('click', function(){
     }
 
     isDeathOverlay = false;
+});
+
+// ==========Auto-Save Logic==================
+function saveGameState() {
+    let remainingPets = Array.from(petSelect.options).map(opt => opt.value);
+    let gameState = {
+        hunger: hunger,
+        energy: energy,
+        happiness: happiness,
+        pet: currentPet,
+        aliveList: remainingPets,
+        deadPets: deadPets
+    };
+    localStorage.setItem("pip_pet_state", JSON.stringify(gameState));
+}
+window.addEventListener("beforeunload", saveGameState);
+document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+        saveGameState();
+        
+        const statsLow = hunger <= 30 || energy <= 30 || happiness <= 30;
+        if (statsLow && Math.random() < 0.5) {
+            const word = titleGlitchWords[Math.floor(Math.random() * titleGlitchWords.length)];
+            document.title = word;
+        }
+    } else {
+        document.title = normalTitle;
+    }
 });

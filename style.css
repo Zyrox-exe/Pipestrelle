@@ -50,7 +50,7 @@ body{
 }
 
 .bootStatus {
-    flex: 1 1 1;
+    flex: 1 1 auto;
     max-width: 320px;
     background: rgba(36, 28, 79, 0.4);
     border: 2px solid rgba(0, 240, 255, 0.2);
@@ -135,11 +135,12 @@ body{
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
 }
+
 #container{
     display: grid;
     grid-template-rows: auto 1fr auto;
     gap: 20px;
-    height: 80vh;
+    min-height: 80vh;
     width: 90vw;
     max-width: 600px;
     box-shadow: 0 8px 20px rgba(255, 0, 127, 0.4);
@@ -361,5 +362,14 @@ button:active {
     to{
         transform: translateX(-50%) scale(1);
         opacity: 1;
+    }
+}
+/* Mobile Responsiveness */
+@media (max-width: 550px) {
+    #stats {
+        grid-template-columns: 1fr;
+    }
+    .pet {
+        transform: scale(3);
     }
 }

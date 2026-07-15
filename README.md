@@ -1,12 +1,12 @@
 # Pipestrelle(Pip)
-A cute and cozy virtual pet that lives inside your browser. Choose from various options like cat, dog, panda etc. Take lots of care of your pet or you might never be able to meet it again.
+A cute and cozy virtual pet that lives inside your browser. Choose from various options like cat, dog, panda etc. Take lots of care of your pet or you might never be able to meet it again. Might have some scary stuff based on your luck and how much time you actually give to your pets. Don't try to let them all die as I can't guarantee what will happen. You CANNOT revive a pet you have already killed.
 
 # Features
 - Lots of pets inside your browser
 - Feed pip
 - Make pip sleep
 - Play with pip
-- Dont let Pip die
+- Take care of them
 
 # Highlights
 - Made using HTML5, CSS3 and vanilla JavaScript.
@@ -39,6 +39,9 @@ git clone https://github.com/Zyrox-exe/Pipestrelle.git
 |Sleeping Sound| [Pixabay](https://pixabay.com/sound-effects/people-snoring-8486/)|
 |Play Sound| [Pixabay](https://pixabay.com/sound-effects/people-yay-6120/)|
 |Music|[Team Salvato](https://www.youtube.com/@TeamSalvato)/[Itch](https://teamsalvato.itch.io/)|
+
+## AI Usage
+This project used AI for writing the JavaScript as I am very bad at it and it was getting more and more complex with every feature or fixes.
 
 ---
 <footer>Made by Mohd Sadiq Umar</footer>
