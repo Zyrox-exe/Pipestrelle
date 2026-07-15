@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -10,22 +11,129 @@ body{
     background-color:#120e2e;
     color: #ffffff;
 }
-#bootScreen{
+#bootScreen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #0a0618;
+    background-color: #0d091f;
+    background-image: radial-gradient(circle at center, #1a123a 0%, #070412 100%);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
-.bootTerminal{
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+
+#bootLogo {
+    font-family: 'Press Start 2P', monospace;
     color: #00f0ff;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    margin-bottom: 4vh;
+    text-align: center;
+    animation: float 4s ease-in-out infinite;
+}
+
+#statusContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 5vh;
+}
+
+.bootStatus {
+    flex: 1 1 1;
+    max-width: 320px;
+    background: rgba(36, 28, 79, 0.4);
+    border: 2px solid rgba(0, 240, 255, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease;
+}
+
+.bootStatus:hover {
+    border-color: rgba(0, 240, 255, 0.6);
+}
+
+.bootStatusHeading {
+    font-size: 1.2rem;
+    color: #39ff14;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed rgba(57, 255, 20, 0.3);
+    padding-bottom: 5px;
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.4);
+}
+
+.bootText {
+    font-size: 0.95rem;
+    color: #e0ddf0;
+    line-height: 1.6;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+#bootBtn {
+    align-self: center;
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    letter-spacing: 1px;
+    background-color: #7000ff;
+    border: 2px solid #00f0ff;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    animation: appear 0.6s ease-out backwards;
+}
+
+#bootBtn:hover {
+    background-color: #00f0ff;
+    color: #120e2e;
+    box-shadow: 0 0 25px #00f0ff;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+#leftStatusBox {
+    animation: slideInFromLeft 0.6s ease-out forwards;
+}
+
+#centerStatusBox {
+    animation: appear 0.6s ease-out forwards;
+}
+
+#rightStatusBox {
+    animation: slideInFromRight 0.6s ease-out forwards;
+}
+
+@keyframes slideInFromLeft {
+    0% { transform: translateX(-40px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+    0% { transform: translateX(40px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes appear {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 }
 #container{
     display: grid;
@@ -179,7 +287,7 @@ button:active {
     justify-content: center;
     align-items: center;
 }
-.pet{
+.pet {
     position: absolute;
     bottom: 15vh;
     width: 64px;
@@ -188,8 +296,7 @@ button:active {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     transform: scale(4);
-
-    background-image: var(--sprite);
+    background-image: var(--sprite, none); 
     background-repeat: no-repeat;
     background-position: left center;
     animation: spriteAnimation 0.8s steps(8) infinite;

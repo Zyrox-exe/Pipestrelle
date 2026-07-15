@@ -1,12 +1,14 @@
 //=============Global Variables================
-let hunger;
-let energy;
-let happiness;
+let hunger = 100;
+let energy = 100;
+let happiness = 100;
 let currentPet;
 let isHaunted = false;
 let currentSongIndex = 0;
 let isActing = false;
 let nextBehaviourTime = Date.now() + 15000;
+let isDeathOverlay = false;
+let deadPets = [];
 //========Pets Data===============
 const defaultPets = ["bunny","cat","dog","dragon","panda"];
 const pets = {
@@ -115,8 +117,8 @@ const petSpeech = {
         "Get Away insect!"
     ],
 }
-const glitchWords = ["HELP","DIE","REPENT","lemme out","I'M trapped","WHY?"];
-const titleGlitchWords = ["...help me","come back","don't leave","still here","PIPIP"];
+const glitchWords = ["HELP","DIE","REPENT","lemme out","I'M trapped","WHY?"]
+const titleGlitchWords = ["...help me", "come back", "don't leave", "still here?", "PIP"];
 const normalTitle = document.title;
 
 document.addEventListener("visibilitychange", function() {
@@ -130,7 +132,6 @@ document.addEventListener("visibilitychange", function() {
         document.title = normalTitle;
     }
 });
-
 //==============Pets Animation================
 function setAnimation(state) {
     const petData = pets[currentPet];
@@ -207,6 +208,7 @@ if(savedData){
     energy = parsed.energy;
     happiness = parsed.happiness;
     currentPet = parsed.pet;
+    deadPets = parsed.deadPets || [];
     let aliveList = parsed.aliveList || defaultPets;
     
     petSelect.innerHTML = "";
@@ -229,6 +231,7 @@ if(savedData){
     happiness = 100;
     currentPet = "cat";
     isHaunted = false;
+    deadPets = [];
     
     petSelect.disabled = false;
     petSelect.innerHTML = "";
@@ -260,6 +263,8 @@ setAnimation("idle");
 mainBootBtn.addEventListener('click', function() {
     bgMusic.play().catch(error => console.log("Audio play blocked:"+error));
     bootScreen.style.display = "none";
+    isActing = false; 
+    setAnimation("idle");
 });
 
 petSelect.addEventListener("change", function(){
@@ -323,7 +328,16 @@ function catBehaviour() {
 function speak(){
     if(!speechBubble.classList.contains("hidden")) return;
     let messages;
-    if(hunger <= 30) {
+    if(deadPets.length > 0 && Math.random() < 0.15) {
+        const gone = deadPets[Math.floor(Math.random() * deadPets.length)];
+        const goneName = gone.charAt(0).toUpperCase() + gone.slice(1);
+        messages = [
+            `Where did ${goneName} go?`,
+            `...I miss ${goneName}.`,
+            `You forgot about ${goneName} too?`
+        ];
+    }
+    else if(hunger <= 30) {
         messages = [
             "I'm hungry man...",
             "Food please...",
@@ -448,6 +462,8 @@ setInterval(function() {
             bgMusic.pause();
             gameOverText.innerText = `YOU FoRgOt AbOuT mE dIdN't you?`;
             gameOverOverlay.classList.remove("hidden");
+            isDeathOverlay = true;
+            deadPets.push(currentPet);
             let currentOption = petSelect.querySelector(`option[value = ${currentPet}]`);
             if (currentOption) {
                 currentOption.remove();
@@ -463,10 +479,12 @@ setInterval(function() {
     } else if(happiness <= 0){
         gameOverText.innerText = "Play with Pip if you want to stay with him.";
         gameOverOverlay.classList.remove("hidden");
+        isDeathOverlay = false;
         happiness = 20;
     } else if(energy <= 0){
         gameOverText.innerText = "Pip passed out from exhaustion! Giving him a forced nap.";
         gameOverOverlay.classList.remove("hidden");
+        isDeathOverlay = false;
         energy = 100;
     }
     
@@ -476,7 +494,8 @@ setInterval(function() {
         energy: energy,
         happiness: happiness,
         pet: currentPet,
-        aliveList: remainingPets
+        aliveList: remainingPets,
+        deadPets: deadPets
     }
     if (petData.interactive && (hunger < 30 || energy < 30 || happiness < 30)) {
         if (Math.random() < 0.15){
@@ -547,10 +566,13 @@ playBtn.addEventListener('click', function(){
 
 rebootBtn.addEventListener('click', function(){
     gameOverOverlay.classList.add("hidden");
+
     if (!isDeathOverlay) {
+        // Pip just passed out / got sad - not dead. Resume with the same pet.
         setAnimation("idle");
         return;
     }
+
     if (petSelect.options.length > 0) {
         currentPet = petSelect.options[0].value;
         petSelect.value = currentPet;
@@ -569,5 +591,6 @@ rebootBtn.addEventListener('click', function(){
         petSelect.disabled = true;
         setAnimation("idle");
     }
+
     isDeathOverlay = false;
 });

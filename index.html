@@ -8,14 +8,33 @@
 </head>
 <body>
     <div id="bootScreen">
-        <div class="bootTerminal">
-            <p>> CODENAME: PIP</p>
-            <p>> SYSTEM STATUS: ONLINE</p>
+        <h1 id="bootLogo">Pipestrelle!</h1>
+        <div style="display: flex;flex-direction: column;">
+            <div id="statusContainer">
+                <div class="bootStatus" id="leftStatusBox">
+                    <h4 class="bootStatusHeading">System Status</h4>
+                    <p class="bootText">CODENAME: PIP</p>
+                    <p class="bootText">SYSTEM STATUS: ONLINE</p>
+                </div>
+                <div class="bootStatus" id="centerStatusBox">
+                    <h4 class="bootStatusHeading">Pet Scan</h4>
+                    <p class="bootText">Cat: Ready</p>
+                    <p class="bootText">Dog: Ready</p>
+                    <p class="bootText">Bunny: Ready</p>
+                    <p class="bootText">Panda: Ready</p>
+                    <p class="bootText">Dragon: Ready</p>
+                </div>
+                <div class="bootStatus" id="rightStatusBox">
+                    <h4 class="bootStatusHeading">Network and Memory</h4>
+                    <p class="bootText">Local Storage: Mounted</p>
+                    <p class="bootText">External Connection: Connected</p>
+                </div>
+            </div>
             <button id="bootBtn">LAUNCH SYSTEM</button>
         </div>
     </div>
     <div id="container">
-        <div >
+        <div>
             <div class="menuContainer">
                 <label >Companion: </label>
                 <select id="petSelect">
@@ -30,7 +49,7 @@
         <main class="arcadeScreen">
             <div id="deathFade"></div>
             <div id="speechBubble" class="hidden"></div>
-            <div class="pet idle"></div>
+            <div class="pet"></div>
             <div id="gameOverOverlay" class="hidden">
                 <p id="gameOverText">you MADE a MISTAKE: PIP is GONE</p>
                 <button id="rebootBtn">Yes?</button>
@@ -39,17 +58,17 @@
             <div id="stats">
                 <div id="hunger" class="health">
                     <div id="hungerStatus" class="status"></div>
-                    <progress max="100" value="10" id="hungerBar" class="progressBar"></progress>
+                    <progress max="100" value="100" id="hungerBar" class="progressBar"></progress>
                     <button id="feedBtn">Feed</button>
                 </div>
                 <div id="energy" class="health">
                     <div id="energyStatus" class="status"></div>
-                    <progress max="100" value="10" id="energyBar" class="progressBar"></progress>
+                    <progress max="100" value="100" id="energyBar" class="progressBar"></progress>
                     <button id="sleepBtn">Sleep</button>
                 </div>
                 <div id="happiness" class="health">
                     <div id="happinessStatus" class="status"></div>
-                    <progress max="100" value="10" id="happinessBar" class="progressBar"></progress>
+                    <progress max="100" value="100" id="happinessBar" class="progressBar"></progress>
                     <button id="playBtn">Play!</button>
                 </div>
             </div>
